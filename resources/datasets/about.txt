@@ -1,0 +1,10 @@
+ 
+University data: 
+https://github.com/endSly/world-universities-csv/blob/master/world-universities.csv
+
+Anime Faces:
+https://www.kaggle.com/splcher/animefacedataset
+
+Surnames:
+https://www2.census.gov/topics/genealogy/1990surnames/dist.all.last
+

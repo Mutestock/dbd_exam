@@ -1,0 +1,23 @@
+[tool.poetry]
+name = "data_population"
+version = "0.1.0"
+description = ""
+authors = ["Mutestock <doublenegative@protonmail.com>"]
+
+[tool.poetry.dependencies]
+python = "^3.9"
+pandas = "^1.2.4"
+numpy = "^1.20.3"
+pymongo = "^3.11.4"
+Cython = "^0.29.23"
+click = "^8.0.0"
+psycopg2 = "^2.8.6"
+nose2 = "^0.10.0"
+python-dotenv = "^0.17.1"
+
+[tool.poetry.dev-dependencies]
+pytest = "^5.2"
+
+[build-system]
+requires = ["poetry-core>=1.0.0"]
+build-backend = "poetry.core.masonry.api"
