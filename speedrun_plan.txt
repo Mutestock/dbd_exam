@@ -1,0 +1,58 @@
+Note started 24/05/21
+
+The start of this project has been pushed more than a little bit.
+This is because of all three exams being in the same time period.
+So I have a total of 8 days to make this assignment.
+Meanwhile I have two other exams which still haven't been completed, but require constant maintainance,
+because the deadlines of them are made in chunks.
+Thanks a lot =)
+
+
+Days:
+
+24/05/21
+    Rest of planning
+    All docker containers functional
+    Frontend cleared and ready for development
+    All connectors and tests hereof.
+
+25/05/21
+    Rest of data files from internet found
+    Postgres entities and model defined
+    CSV -> Mongo
+    Mongo -> Meilisearch
+
+26/05/21
+    Entire Rust Diesel ORM setup
+    All routes implemented with Warp
+    Basic routes with Meili
+    Basic routes with Mongo
+
+27/05/21
+    (UFO report finalized and sent to Wiseflow)
+    (UFO recommending literature to other group)
+    (https://datsoftlyngby.github.io/soft2021spring/resources/9c5e8e32-exam-task.pdf)
+    Basic routes with Redis
+    Redis caching system implemented
+
+28/05/21
+    Frontend basic calls to backend with Axios
+    Backend can send images
+    
+29/05/21
+    Frontend can display images
+    Frontend can use all GET calls to REST API
+    Frontend can use Meilisearch
+
+30/05/21
+    Meilisearch logs... Everything
+    Frontend client can create a user
+    Frontend client can log in
+
+31/05/21
+    Backend routes for mongo changelog
+    Frontend can display changelog
+
+01/06/21
+    Buffer
+
