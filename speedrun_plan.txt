@@ -18,7 +18,7 @@ Days:
 
 25/05/21
     Rest of data files from internet found
-    Postgres entities and model defined
+    Postgres entities and model are both defined and visualized
     CSV -> Mongo
     Mongo -> Meilisearch
 
@@ -40,6 +40,8 @@ Days:
     Backend can send images
     
 29/05/21
+    Backend route for displaying images
+    Backend routes for Meilisearch
     Frontend can display images
     Frontend can use all GET calls to REST API
     Frontend can use Meilisearch

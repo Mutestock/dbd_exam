@@ -1,0 +1,41 @@
+#FROM rust as builder
+#WORKDIR /usr/src/backend
+#COPY . .
+#RUN cargo install --path .
+
+#FROM debian:buster-slim
+#RUN apt-get update
+
+## Postgres
+#RUN apt-get install libpq-dev -y
+#RUN apt-get install -y postgresql postgresql-client
+
+# Mongo
+#RUN apt-get install -y gnupg
+#RUN apt-get install -y wget 
+#RUN wget -qO - https://www.mongodb.org/static/pgp/server-4.4.asc | apt-key add -
+#RUN echo "deb http://repo.mongodb.org/apt/debian buster/mongodb-org/4.4 main" | tee /etc/apt/sources.list.d/mongodb-org-4.4.list
+#RUN apt-get update
+#RUN apt-get install -y mongodb-org
+#RUN rm -rf /var/lib/apt/lists/*
+
+#COPY --from=builder /usr/local/cargo/bin/backend /usr/local/bin/backend
+#
+#EXPOSE 31291
+#EXPOSE 3030
+#CMD ["backend"]
+
+
+FROM rust
+
+# Postgres
+RUN apt-get install libpq-dev -y
+RUN apt-get update
+
+WORKDIR /usr/src/backend
+COPY . .
+
+RUN cargo install --path .
+EXPOSE 31291
+EXPOSE 3030
+CMD ["backend"]

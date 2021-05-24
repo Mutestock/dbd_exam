@@ -84,6 +84,9 @@ Since the project requires a larger amount of data, the project has been created
 I'm using a Rust backend, since it's a solo project, and I already have a setup for it. It's effective and stable. It's a role I don't trust Python all that much with.
 
 The Python container for data processing is only run once. It's purpose is to populate the databases with some dummy data. The data is acquired from several sources, and translated via. the Python library Pandas, and then subsequently formatted and populated into Mongo. From there, the data will once again be formatted and populated into Meilisearch.
+The reason why the Python container isn't populating the Postgres database as well, is because it'd mean, that both the Rust backend and the Python data processing container would have to have the complete ORM set up.
+I'd also need the two ORMs be completely alike.
+The other option is to use mongo inside the Rust container, but only have to create 1 ORM with Postgres setup. I chose the latter.
 
 \section{Structure}
 
@@ -116,6 +119,13 @@ Define functional and non-functional requirements to your project
 
 \subsection{Stretch Goals}
 \begin{itemize}
+	\item data\_population: documentation with Sphinx
+	\item backend: Documentation rustdocs 
+	
+\end{itemize}
+
+\subsection{Scrapped}
+\begin{itemize}
 	\item Apply solution to Digital Ocean droplet
 	\begin{itemize}
 		\item Create and setup server on digital ocean
@@ -123,13 +133,10 @@ Define functional and non-functional requirements to your project
 		\item CI with github actions.
 		\item github actions secrets with docker-compose
 		\item SSH SCP appleboy execution of docker-compose solution
+		\item nginx
 	\end{itemize}
-	\item data\_population: documentation with Sphinx
-	\item backend: Documentation rustdocs 
-	
-\end{itemize}
 
-\subsection{Scrapped}
+\end{itemize}
 
 \section{Installation}
 
