@@ -3,6 +3,11 @@
 # Custom
 
 data
+package-lock.json
+*/package-lock.json
+**/package-lock.json
+frontend/package-lock.json
+
 
 # End Custom
 

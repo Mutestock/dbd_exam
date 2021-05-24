@@ -14,7 +14,7 @@ Days:
 
 24/05/21
     Planning (Done for now)
-    All docker containers functional (Missing backend)
+    All docker containers functional (Done)
     Frontend cleared and ready for development(Done)
     All connectors and tests hereof.
 
