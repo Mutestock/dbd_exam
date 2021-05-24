@@ -61,14 +61,7 @@ services:
       ports:
           - "31297:8081"
       networks: 
-          - app-network
-          
-    meili-dashboard:
-      image: shokme/meilisearch-dashboard
-      ports:
-        - 31298:80
-      networks: 
-        - app-network  
+          - app-network  
 
 networks:
   app-network:

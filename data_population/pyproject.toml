@@ -14,6 +14,7 @@ click = "^8.0.0"
 psycopg2 = "^2.8.6"
 nose2 = "^0.10.0"
 python-dotenv = "^0.17.1"
+meilisearch = "^0.14.2"
 
 [tool.poetry.dev-dependencies]
 pytest = "^5.2"

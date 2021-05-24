@@ -23,7 +23,6 @@ localhost:31294 - Meilisearch \
 localhost:31295 - Postgres \
 localhost:31296 - Redis \
 localhost:31297 - Redis-commander \
-localhost:31298 - Meilisearch Dashboard \
 
 
 ### Running locally without containers:
