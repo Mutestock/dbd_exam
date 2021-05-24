@@ -5,9 +5,13 @@ WORKDIR /usr/src/app
 
 # install dependencies
 RUN apt-get update && apt-get install -y --no-install-recommends netcat
-RUN apt-get install libpq-dev
+RUN apt-get install libpq-dev -y
 
 
+ENV DEBIAN_FRONTEND noninteractive
+RUN apt-get update && \
+    apt-get -y install gcc mono-mcs && \
+    rm -rf /var/lib/apt/lists/*
 
 COPY requirements.txt ./
 RUN pip install --no-cache-dir -r requirements.txt

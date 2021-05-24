@@ -3,21 +3,21 @@ version: '3'
 services:
     back_data_population:
         build:
-            context: ./back_data_population
+            context: ./data_population
             dockerfile: dockerfile
         environment:
-            PRODUCTION_VARIABLES=1
-            POSTGRES_HOST=pg_dbd_exam
-            POSTGRES_USER=softdbd_user
-            POSTGRES_PASSWORD=softdbd_pass
-            POSTGRES_DB=softdbd_db
-            POSTGRES_PORT=31295
-            MONGO_INITDB_ROOT_USERNAME=softdbd_user
-            MONGO_INITDB_ROOT_PASSWORD=softdbd_pass
+          - PRODUCTION_VARIABLES=1
+          - POSTGRES_HOST=pg_dbd_exam
+          - POSTGRES_USER=softdbd_user
+          - POSTGRES_PASSWORD=softdbd_pass
+          - POSTGRES_DB=softdbd_db
+          - POSTGRES_PORT=31295
+          - MONGO_INITDB_ROOT_USERNAME=softdbd_user
+          - MONGO_INITDB_ROOT_PASSWORD=softdbd_pass
         ports:
-            - 31292:31292
+          - 31292:31292
         volumes:
-            ./resources:/resources
+            - ./resources:/resources
             
     mongo_basic_info_storage:
         image: mongo:latest
