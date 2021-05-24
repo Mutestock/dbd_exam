@@ -4,6 +4,8 @@ import os
 # utils.environment swaps environment variables on import
 import utils.environment
 
+# Not currently used
+
 POSTGRES_USER = os.getenv('POSTGRES_USER')
 POSTGRES_PASS = os.getenv('POSTGRES_PASSWORD')
 POSTGRES_DATABASE = os.getenv('POSTGRES_DB')

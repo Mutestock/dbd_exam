@@ -26,6 +26,7 @@ futures = { version = "0.3", default-features = false, features = ["alloc"]}
 dotenv = "0.15.0"
 jsonwebtoken = "=7.2"
 thiserror = "1.0.24"
+tokio-test="0.4.2"
 
 # Serde
 serde = { version = "1.0.125", features = ["derive"] }

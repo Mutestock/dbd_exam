@@ -8,7 +8,6 @@ SRC_PATH = "../src"
 connections = importlib.import_module("connection", SRC_PATH)
 meili_connection = importlib.import_module("connection.meili_connection", SRC_PATH)
 mongo_connection = importlib.import_module("connection.mongo_connection", SRC_PATH)
-postgres_connection = importlib.import_module("connection.pg_connection", SRC_PATH)
 environment = importlib.import_module("utils.environment", SRC_PATH)
 
 
@@ -21,14 +20,6 @@ class TestMongo(unittest.TestCase):
     def test_mongo_connection(self):
         connection = mongo_connection.make_mongo_pool()
         self.assertTrue(connection is not None)
-
-
-class TestPostgres(unittest.TestCase):
-    def test_postgres_connection(self):
-        connection = postgres_connection.make_pg_pool()
-        cursor = connection.cursor()
-        self.assertTrue(cursor is not None)
-
 
 class TestMeili(unittest.TestCase):
     def test_meili_connection(self):
