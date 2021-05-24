@@ -11,6 +11,5 @@ MONGO_PASSWORD = os.getenv("MONGO_INITDB_ROOT_PASSWORD")
 
 
 def make_mongo_pool():
-    return MongoClient(
-        f"mongo://{MONGO_USERNAME}:{MONGO_PASSWORD}@{MONGO_HOST}:{MONGO_PORT}/"
-    )
+    conn_str = f"mongodb://{MONGO_USERNAME}:{MONGO_PASSWORD}@{MONGO_HOST}:{MONGO_PORT}/"
+    return MongoClient(conn_str)

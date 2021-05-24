@@ -8,6 +8,6 @@ MEILI_HOST = os.getenv("MEILI_HOST")
 MEILI_PORT = os.getenv("MEILI_PORT")
 MEILI_MASTER_KEY = os.getenv("MEILI_MASTER_KEY")
 
-def get_connection():
+def make_meili_pool():
     return meilisearch.Client(f"{MEILI_HOST}:{MEILI_PORT}", MEILI_MASTER_KEY)
 
