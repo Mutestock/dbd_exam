@@ -1,19 +1,21 @@
 Note started 24/05/21
 
 The start of this project has been pushed more than a little bit.
-This is because of all three exams being in the same time period.
-So I have a total of 8 days to make this assignment.
+This is because of all three exams being in the same time period,
+as well as some other not so minor mandatory assignments.
+So I have a total of 8 days to make this exam project.
 Meanwhile I have two other exams which still haven't been completed, but require constant maintainance,
 because the deadlines of them are made in chunks.
+The teachers could've put out the exam definitions a long time ago,
+but they decided that us breaking our backs would be much more fun.
 Thanks a lot =)
-
 
 Days:
 
 24/05/21
-    Rest of planning
-    All docker containers functional
-    Frontend cleared and ready for development
+    Planning (Done for now)
+    All docker containers functional (Missing backend)
+    Frontend cleared and ready for development(Done)
     All connectors and tests hereof.
 
 25/05/21

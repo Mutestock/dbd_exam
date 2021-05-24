@@ -37,5 +37,4 @@ COPY . .
 
 RUN cargo install --path .
 EXPOSE 31291
-EXPOSE 3030
 CMD ["backend"]
