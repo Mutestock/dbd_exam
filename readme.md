@@ -1,25 +1,25 @@
 ### Running:
 
 Use these commands (In this order):
-> docker-compose -f docker-compose.db.yml up
-> docker-compose -f docker-compose.data-processing.yml up
-> docker-compose -f docker-compose.main.yml up
+> docker-compose -f docker-compose.db.yml up \
+> docker-compose -f docker-compose.data-processing.yml up \
+> docker-compose -f docker-compose.main.yml up \
 
-Use -d for detached mode.
-Or start a new terminal with each command.
-Note that data-population shuts down immediately after having finished its purpose.
-Note that the Rust backend container's compilation time is very slow.
-
-Containers:
-localhost:31290 - Frontend
-localhost:31291 - Backend
-localhost:31292 - Data processing(shuts down immediately)
-localhost:31293 - Mongodb
-localhost:31294 - Meilisearch
-localhost:31295 - Postgres
-localhost:31296 - Redis
-localhost:31297 - Redis-commander
-localhost:31298 - Meilisearch Dashboard
+Use -d for detached mode. \
+Or start a new terminal with each command. \
+Note that data-population shuts down immediately after having finished its purpose. \
+Note that the Rust backend container's compilation time is very slow. \
+ \
+Containers: \
+localhost:31290 - Frontend \
+localhost:31291 - Backend \
+localhost:31292 - Data processing(shuts down immediately) \
+localhost:31293 - Mongodb \
+localhost:31294 - Meilisearch \
+localhost:31295 - Postgres \
+localhost:31296 - Redis \
+localhost:31297 - Redis-commander \
+localhost:31298 - Meilisearch Dashboard \
 
 
 ### Running locally without containers:
@@ -28,14 +28,14 @@ localhost:31298 - Meilisearch Dashboard
 
 #### Required
 
-Functional postgres setup on the machine.
-    Required for psycopg2
-    Linux machines: Need libpg-devel
-        On fedora:
-            > sudo dnf install postgresql-devel
-Python 3.9
-C Compiler for Cython (Like gcc).
+Functional postgres setup on the machine. \
+    Required for psycopg2 \
+    Linux machines: Need libpg-devel \
+        On fedora: \
+            > sudo dnf install postgresql-devel \
+Python 3.9 \
+C Compiler for Cython (Like gcc). \
 
 #### Optional
 
-Poetry
+Poetry \
