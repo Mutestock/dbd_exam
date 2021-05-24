@@ -21,8 +21,8 @@ services:
             - 31294:7700
         volumes:
             - ./data/meili/data.ms:/data.ms
-        environment:
-            - MEILI_MASTER_KEY=jaedenar_nutcracker
+        #environment:
+        #    - MEILI_MASTER_KEY=jaedenar_nutcracker
 
     pg_dbd_exam:
         image: postgres:11-alpine

@@ -1,5 +1,7 @@
 import psycopg2
 import os
+
+# utils.environment swaps environment variables on import
 import utils.environment
 
 POSTGRES_USER = os.getenv('POSTGRES_USER')
