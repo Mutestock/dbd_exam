@@ -7,11 +7,25 @@ WORKDIR /usr/src/app
 RUN apt-get update && apt-get install -y --no-install-recommends netcat
 RUN apt-get install libpq-dev -y
 
-
+# Cython and psycopg2
 ENV DEBIAN_FRONTEND noninteractive
 RUN apt-get update && \
     apt-get -y install gcc mono-mcs && \
     rm -rf /var/lib/apt/lists/*
+
+
+# Build Cython packages in setup.py
+
+# 2 optional custom cli commands
+# cli command for wget datasets
+# cli command for data formatting
+
+# 2 custom cli commands
+# cli command for converting to mongo
+# cli command for converting mongo to postgres
+
+
+
 
 COPY requirements.txt ./
 RUN pip install --no-cache-dir -r requirements.txt

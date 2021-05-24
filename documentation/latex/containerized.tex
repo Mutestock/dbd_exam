@@ -1,0 +1,137 @@
+\documentclass[a4paper, 12pt]{article}
+
+
+\usepackage[english]{babel}
+\usepackage[utf8]{inputenc}
+\usepackage{graphicx}
+\usepackage[a4paper, width=150mm, top=25mm, bottom=25mm]{geometry}
+\usepackage{mathptmx}
+\usepackage[T1]{fontenc}
+\usepackage{enumitem}
+\usepackage{amsmath}
+\usepackage{index}
+\usepackage{fancyhdr}
+\usepackage{titlesec}
+\usepackage{subfig}
+\usepackage{listings}
+\usepackage{listings-rust}
+\titleformat{\chapter}{\normalfont\huge}{\thechapter.}{20pt}{\huge\it}
+
+
+
+\usepackage{biblatex}
+\addbibresource{containerized.bib}
+
+\graphicspath{ {images/} }
+
+\usepackage{listings}
+\usepackage{xcolor}
+
+\definecolor{codegreen}{rgb}{0,0.6,0}
+\definecolor{codegray}{rgb}{0.5,0.5,0.5}
+\definecolor{codepurple}{rgb}{0.58,0,0.82}
+\definecolor{backcolour}{rgb}{0.95,0.95,0.92}
+
+\lstdefinestyle{mystyle}{
+    backgroundcolor=\color{backcolour},   
+    commentstyle=\color{codegreen},
+    keywordstyle=\color{magenta},
+    numberstyle=\tiny\color{codegray},
+    stringstyle=\color{codepurple},
+    basicstyle=\ttfamily\footnotesize,
+    breakatwhitespace=false,         
+    breaklines=true,                 
+    captionpos=b,                    
+    keepspaces=true,                 
+    numbers=left,                    
+    numbersep=5pt,                  
+    showspaces=false,                
+    showstringspaces=false,
+    showtabs=false,                  
+    tabsize=2
+}
+
+
+\usepackage{hyperref}
+\hypersetup{
+    colorlinks=true,
+    linkcolor=blue,
+    filecolor=magenta,      
+    urlcolor=cyan,
+}
+
+\urlstyle{same}
+\lstset{style=mystyle}
+
+
+
+\begin{document}
+\title{\Large{\textbf{Containerization As A Tool For Learning}}}
+\author{Henning W.}
+\date{\today}
+\maketitle
+\fancyhf{}
+\renewcommand{\headrulewidth}{2pt}
+\renewcommand{\headrulewidth}{2pt}
+\fancyhead{\leftmark}
+\fancyfoot{\thepage}
+
+\section{Introduction}
+Choice of application: Some kind of social media platform thing. Due to large time constraints, some suboptimal solutions will have be taken. I usually would start off the project by making CI/CD with a server. These factors have been discarded entirely. This means, that there won't be any online capabilities in this project. Instead the entire application will be containerized, in an attempt at making the local solution easier to run. Another suboptimal solution is, that the database containers and the containers which utilize them have been split into two separate container files. You'd usually want both of them to share the same docker-compose file. The problem lies with migration strategies, and what I like calling "A chicken or egg" complication. Both data processing and my backend are reliant on the database. Further more, my backend is reliant on the data-processing. Because of this, the containers will need to be run in chunks. The standard solution to this is somewhat suboptimal in itself. It involves \href{https://github.com/vishnubob/wait-for-it}{files which lets other processes run first} before executing itself.
+
+Since the project requires a larger amount of data, the project has been created a bit backwards. I've looked at some datasets, and then slowly formulated data models from them.
+
+I'm using a Rust backend, since it's a solo project, and I already have a setup for it. It's effective and stable. It's a role I don't trust Python all that much with.
+
+The Python container for data processing is only run once. It's purpose is to populate the databases with some dummy data. The data is acquired from several sources, and translated via. the Python library Pandas, and then subsequently formatted and populated into Mongo. From there, the data will once again be formatted and populated into Meilisearch.
+
+\section{Structure}
+
+
+\section{Goals}
+This section is dedicated to the following assignment definition question:
+
+Define functional and non-functional requirements to your project
+
+\subsection{Implemented}
+\begin{itemize}
+	\item
+\end{itemize}
+
+\subsection{Planned}
+\begin{itemize}
+	\item Gathering of datasets
+	\item Create diagrams for database
+	\item data\_population: Processing of datasets to usable format
+	\item data\_population: Datasets inserted into Mongo with Cython
+	\item data\_population: connection tests
+	\item data\_population: logging
+	\item backend: Postgres, Redis, Mongo connectors and tests
+	\item backend: Generate Postgres entries from Mongo database
+	\item backend: Redis caching
+	\item frontend: Basic site setup with routes
+	\item frontend: Meilisearch functionality implemented
+	\item frontend: Interaction with Redis routes.
+\end{itemize}
+
+\subsection{Stretch Goals}
+\begin{itemize}
+	\item Apply solution to Digital Ocean droplet
+	\begin{itemize}
+		\item Create and setup server on digital ocean
+		\item docker-compose deployment version
+		\item CI with github actions.
+		\item github actions secrets with docker-compose
+		\item SSH SCP appleboy execution of docker-compose solution
+	\end{itemize}
+	\item data\_population: documentation with Sphinx
+	\item backend: Documentation rustdocs 
+	
+\end{itemize}
+
+\subsection{Scrapped}
+
+\section{Installation}
+
+
+\end{document}
