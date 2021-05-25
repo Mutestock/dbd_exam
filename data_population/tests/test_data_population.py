@@ -9,6 +9,7 @@ connections = importlib.import_module("connection", SRC_PATH)
 meili_connection = importlib.import_module("connection.meili_connection", SRC_PATH)
 mongo_connection = importlib.import_module("connection.mongo_connection", SRC_PATH)
 environment = importlib.import_module("utils.environment", SRC_PATH)
+aliases = importlib.import_module("utils.aliases", SRC_PATH)
 
 
 class TestMisc(unittest.TestCase):
@@ -18,8 +19,19 @@ class TestMisc(unittest.TestCase):
 
 class TestMongo(unittest.TestCase):
     def test_mongo_connection(self):
-        connection = mongo_connection.make_mongo_pool()
-        self.assertTrue(connection is not None)
+        pool = mongo_connection.make_mongo_pool()
+        self.assertTrue(pool is not None)
+        
+    def test_mongo_basic(self):
+        pool = mongo_connection.make_mongo_pool()
+        db = pool["admin"] 
+        collection = db['test']
+        test = {
+            "thing":"stuff",
+            "text":"some_arbitrary text"
+        }
+        test_id = collection.insert_one(test).inserted_id
+        self.assertTrue(test_id is not None)
 
 class TestMeili(unittest.TestCase):
     def test_meili_connection(self):

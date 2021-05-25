@@ -5,10 +5,9 @@ version: '3'
 services:
     mongo_basic_info_storage:
         image: mongo:latest
-        environment:
-            - MONGO_INITDB_ROOT_USERNAME=softdbd_user
-            - MONGO_INITDB_ROOT_PASSWORD=softdbd_pass
-            - MONGO_INITDB_DATABASE=softdbd_db
+        #environment:
+            #- MONGO_INITDB_ROOT_USERNAME=softdbd_user
+            #- MONGO_INITDB_ROOT_PASSWORD=softdbd_pass
         ports:
             - 31293:27017
         volumes:
