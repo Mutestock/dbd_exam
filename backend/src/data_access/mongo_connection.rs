@@ -1,23 +1,29 @@
-use mongodb::{Client, error::Error, options::ClientOptions};
+use mongodb::{error::Error, options::ClientOptions, Client};
 use std::env;
 
 lazy_static! {
     static ref MONGO_CONNECTION_STRING: String = {
         let mongo_username = match env::var("MONGO_INITDB_ROOT_USERNAME") {
             Ok(v) => v,
-            Err(e) => panic!("Meili host missing environment variable {}", e),
+            Err(e) => panic!(
+                "MONGO_INITDB_ROOT_USERNAME missing environment variable {}",
+                e
+            ),
         };
         let mongo_password = match env::var("MONGO_INITDB_ROOT_PASSWORD") {
             Ok(v) => v,
-            Err(e) => panic!("Meili host missing environment variable {}", e),
+            Err(e) => panic!(
+                "MONGO_INITDB_ROOT_PASSWORD missing environment variable {}",
+                e
+            ),
         };
-        let mongo_host = match env::var("MEILI_HOST") {
+        let mongo_host = match env::var("MONGO_HOST") {
             Ok(v) => v,
-            Err(e) => panic!("Meili host missing environment variable {}", e),
+            Err(e) => panic!("MONGO_HOST missing environment variable {}", e),
         };
         let mongo_port = match env::var("MONGO_PORT") {
             Ok(v) => v,
-            Err(e) => panic!("Meili host missing environment variable {}", e),
+            Err(e) => panic!("MONGO_PORT missing environment variable {}", e),
         };
 
         format!(
@@ -49,9 +55,9 @@ mod tests {
     }
 
     #[test]
-    fn test_sqrt(){
+    fn test_sqrt() {
         let pool = aw!(make_mongo_pool()).unwrap();
 
-        assert_eq!(2==2, true);
+        assert_eq!(2 == 2, true);
     }
 }

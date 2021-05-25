@@ -22,11 +22,19 @@ lazy_static! {
 
         format!("http://{}:{}", host, port)
     };
-    pub static ref POOL: Client<'static> = {
-        let client = Client::new(&MEILI_URL, &MEILI_MASTER_KEY);
-        client
-    };
+    //pub static ref POOL: Client<'static> = {
+    //    let client = Client::new(&MEILI_URL, &MEILI_MASTER_KEY);
+    //    client
+    //};
 }
+
+
+pub fn make_meili_pool() -> Client<'static> {
+    let client = Client::new(&MEILI_URL, &MEILI_MASTER_KEY);
+    client
+}
+
+
 
 #[cfg(test)]
 mod tests {
@@ -41,7 +49,7 @@ mod tests {
     #[test]
     fn test_sqrt() {
         load_variables();
-        let client = &POOL;
+        let client = make_meili_pool();
         aw!(client.health()).unwrap();
         assert_eq!(2 == 2, true);
     }
