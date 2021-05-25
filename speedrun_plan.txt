@@ -16,7 +16,7 @@ Days:
     Planning (Done for now)
     All docker containers functional (Done)
     Frontend cleared and ready for development(Done)
-    All connectors and tests hereof(Partial).
+    All connectors and tests hereof(Done).
 
 25/05/21
     Rest of data files from internet found
