@@ -36,6 +36,18 @@ cpdef grab_last_name(df):
     return str(df.sample().iloc[0])
 
 
+cpdef grab_prepared_email_df():
+    return pd.read_csv(DATASETS.get("random_words_for_email_generation"))
+
+
+cpdef grab_prepared_last_names_df():
+    return pd.read_csv(DATASETS.get('last_names'), delimiter=";")["surname"]
+
+
+cpdef grab_prepared_first_names_df():
+    return pd.read_csv(DATASETS.get('first_names'))["name"]
+
+
 cpdef generate_people():
     cdef collection = get_mongo_collection("people")
     cdef int anime_dir_length = len(os.listdir(ANIME_DIR))
@@ -45,12 +57,9 @@ cpdef generate_people():
 
     # Retrieving datasets to retrieve samples from.
     # This is for random data generation.
-    cdef email_df = pd.read_csv(DATASETS.get("random_words_for_email_generation"))
-    cdef last_names_df = pd.read_csv(DATASETS.get('last_names'), delimiter=";")
-    last_names_df = last_names_df["surname"]
-    cdef first_names_df = pd.read_csv(DATASETS.get('first_names'))
-    first_names_df = first_names_df["name"]
-
+    cdef email_df = grab_prepared_email_df()
+    cdef last_names_df = grab_prepared_last_names_df()
+    cdef first_names_df = grab_prepared_first_names_df()
 
     print(f"{datetime.now().time()} - MongoDB: Flushing people...")
     collection.drop()

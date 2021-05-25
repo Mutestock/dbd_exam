@@ -11,5 +11,6 @@ if __name__ == '__main__':
     collection = db["universities"]
     print("Document count = ", collection.find().count())
     print(thing)
+    mongo_populate.generate_people()
     #cli.manager()
     

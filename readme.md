@@ -3,7 +3,7 @@
 Use these commands (In this order):
 > docker-compose -f docker-compose.db.yml up \
 > docker-compose -f docker-compose.data-processing.yml up \
-> docker-compose -f docker-compose.main.yml up \
+> docker-compose -f docker-compose.main.yml up
 
 Use -d for detached mode. \
 Or start a new terminal with each command. \
