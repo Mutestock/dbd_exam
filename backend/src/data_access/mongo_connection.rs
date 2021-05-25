@@ -35,14 +35,13 @@ lazy_static! {
 
 async fn make_mongo_pool() -> Result<Client, Error> {
     let mut client_options = ClientOptions::parse(&MONGO_CONNECTION_STRING).await?;
-
-    // Manually set an option.
-    client_options.app_name = Some("My App".to_string());
-
-    // Get a handle to the deployment.
     let client = Client::with_options(client_options)?;
     Ok(client)
 }
+
+//  ##############################
+//  ########### Tests ############
+//  ##############################
 
 #[cfg(test)]
 mod tests {

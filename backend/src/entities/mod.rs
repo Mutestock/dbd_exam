@@ -1,1 +1,1 @@
-pub mod person;
+pub mod pg_entities;

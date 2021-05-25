@@ -36,6 +36,10 @@ pub fn make_meili_pool() -> Client<'static> {
 
 
 
+//  ##############################
+//  ########### Tests ############
+//  ##############################
+
 #[cfg(test)]
 mod tests {
     use super::*;
@@ -50,6 +54,7 @@ mod tests {
     fn test_sqrt() {
         load_variables();
         let client = make_meili_pool();
+        // Can't unwrap on failure
         aw!(client.health()).unwrap();
         assert_eq!(2 == 2, true);
     }
