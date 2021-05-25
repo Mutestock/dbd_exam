@@ -1,24 +1,13 @@
-import random
 from connection.mongo_connection import make_mongo_pool
 from utils.dummy_data_utils import EMAIL_DOMAIN_NAMES, ADDRESS_STREET_SYNONYMS
 from utils.aliases import ANIME_DIR
+from logic.person import Person
+from logic.location import Location
+from logic.university import University
+
+import random
+import pandas as pd
 import os
-
-cdef class Person():
-    def __cinit__(self):
-        pass
-
-cdef class Location():
-    def __cinit__(self):
-        pass
-
-cdef class University():
-    def __cinit__(self):
-        pass
-
-cdef class Hobbies():
-    def __cinit__(self):
-        pass
 
 cpdef generate_phone_number():
     cdef str prefix = "#?"

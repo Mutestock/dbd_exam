@@ -6,4 +6,4 @@ import logic.mongo_populate
 stuff = mongo_populate.generate_phone_number()
 print(stuff)
 
-mongo_populate.generate_person()
+mongo_populate.generate_people()
