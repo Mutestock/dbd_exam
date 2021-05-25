@@ -22,14 +22,13 @@ lazy_static! {
 
 // Result<redis::aio::Connection, RedisError>
 
-async fn make_redis_pool() -> redis::RedisResult<redis::aio::Connection> {
+async fn make_async_redis_connection() -> redis::RedisResult<redis::aio::Connection> {
     let client = redis::Client::open(REDIS_CONNECTION_STRING.to_string())?;
     let con = client.get_async_connection().await?;
     Ok(con)
 }
 
-pub fn get_redis_conn() -> redis::RedisResult<redis::Connection> {
-    //let conn_str: String = (REDIS_CONNECTION_STRING.to_string()
+pub fn make_redis_connection() -> redis::RedisResult<redis::Connection> {
     let client = redis::Client::open(REDIS_CONNECTION_STRING.to_string())?;
     let conn = client.get_connection()?;
 
@@ -37,14 +36,13 @@ pub fn get_redis_conn() -> redis::RedisResult<redis::Connection> {
 }
 
 pub fn health_check() -> redis::RedisResult<()> {
-    let _ : () = get_redis_conn()?
+    let _ : () = make_redis_connection()?
     .set("health", "ok")?;
     Ok(())
 }
 
 async fn async_health_check() -> redis::RedisResult<()> {
-    //redis::cmd("SET").arg(&["key2", "bar"]).query_async(&mut make_redis_pool().await?).await?;
-    make_redis_pool().await?.set("health_async","ok").await?;
+    make_async_redis_connection().await?.set("health_async","ok").await?;
     Ok(())
 }
 
@@ -66,13 +64,13 @@ mod tests {
 
     #[test]
     fn test_normal_connection(){
-        get_redis_conn().unwrap();
+        make_redis_connection().unwrap();
         assert_eq!(2 == 2, true);
     }
 
     #[test]
     fn test_async_connection(){
-        aw!(make_redis_pool()).unwrap();
+        aw!(make_async_redis_connection()).unwrap();
         assert_eq!(2 == 2, true);
     }
 
