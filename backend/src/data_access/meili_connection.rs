@@ -28,7 +28,7 @@ lazy_static! {
     //};
 }
 
-
+#[allow(dead_code)]
 pub fn make_meili_pool() -> Client<'static> {
     let client = Client::new(&MEILI_URL, &MEILI_MASTER_KEY);
     client

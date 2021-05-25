@@ -19,14 +19,14 @@ lazy_static! {
     };
 }
 
-// Result<redis::aio::Connection, RedisError>
-
-async fn make_async_redis_connection() -> redis::RedisResult<redis::aio::Connection> {
+#[allow(dead_code)]
+pub async fn make_async_redis_connection() -> redis::RedisResult<redis::aio::Connection> {
     let client = redis::Client::open(REDIS_CONNECTION_STRING.to_string())?;
     let con = client.get_async_connection().await?;
     Ok(con)
 }
 
+#[allow(dead_code)]
 pub fn make_redis_connection() -> redis::RedisResult<redis::Connection> {
     let client = redis::Client::open(REDIS_CONNECTION_STRING.to_string())?;
     let conn = client.get_connection()?;
@@ -34,16 +34,19 @@ pub fn make_redis_connection() -> redis::RedisResult<redis::Connection> {
     Ok(conn)
 }
 
+#[allow(dead_code)]
 pub fn health_check() -> redis::RedisResult<()> {
     let _: () = make_redis_connection()?.set("health", "ok")?;
     Ok(())
 }
 
+#[allow(dead_code)]
 pub fn get_health_check() -> redis::RedisResult<String> {
     let health_check = make_redis_connection()?.get("health")?;
     Ok(health_check)
 }
 
+#[allow(dead_code)]
 pub async fn get_async_health_check() -> redis::RedisResult<String> {
     let health_check = make_async_redis_connection()
         .await?
@@ -52,7 +55,8 @@ pub async fn get_async_health_check() -> redis::RedisResult<String> {
     Ok(health_check)
 }
 
-async fn async_health_check() -> redis::RedisResult<()> {
+#[allow(dead_code)]
+pub async fn async_health_check() -> redis::RedisResult<()> {
     make_async_redis_connection()
         .await?
         .set("health_async", "ok")
