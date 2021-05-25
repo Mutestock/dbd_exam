@@ -19,9 +19,9 @@ Days:
     All connectors and tests hereof(Done).
 
 25/05/21
-    Rest of data files from internet found
-    Postgres entities and model are both defined and visualized
-    CSV -> Mongo
+    Rest of data files from internet found(Done)
+    Postgres entities and model are both defined and visualized(Done)
+    CSV -> Mongo(Ongoing...)
     Mongo -> Meilisearch
 
 26/05/21

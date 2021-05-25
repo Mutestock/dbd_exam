@@ -11,24 +11,15 @@ MONGO_PASSWORD = os.getenv("MONGO_INITDB_ROOT_PASSWORD")
 MONGO_DATABASE = os.getenv("MONGO_INITDB_DATABASE")
 
 
-def make_mongo_pool():
-    #conn_str = f"mongodb://{MONGO_USERNAME}:{MONGO_PASSWORD}@{MONGO_HOST}:{MONGO_PORT}/{MONGO_DATABASE}?authSource=admin"
-    conn_str = "localhost:31293"
-    #client = MongoClient(
-    #    host="localhost",
-    #    username="softdbd_user",
-    #    password="softdbd_pass",
-    #    port=31293,
-    #    authSource="admin",    
-    #)
-    #return client
+# I acknowledge the security risks of running the database without authentication
+# MongoDB's authentication can be strict, and I've been fighting with it.
+# Not enough time to create the correct solution
 
+def make_mongo_pool():
+    conn_str = "localhost:31293"
     return MongoClient(conn_str)
-    # print(conn_str)
-    # return MongoClient(
-    #    host=MONGO_HOST,
-    #    port=int(MONGO_PORT),
-    #    username=MONGO_USERNAME,
-    #    password=MONGO_PASSWORD,
-    #    authSource=MONGO_DATABASE
-    # )
+
+def get_mongo_collection(collection):
+    pool = make_mongo_pool()
+    db = pool[MONGO_DATABASE]
+    return db[collection]
