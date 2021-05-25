@@ -1,8 +1,7 @@
-use std::{env, error::Error};
-use futures::prelude::*;
-use redis::{self, AsyncCommands, Commands, RedisError};
 use crate::utils::environment::load_variables;
-
+use futures::prelude::*;
+use redis::{self, AsyncCommands, Commands};
+use std::env;
 
 lazy_static! {
     static ref REDIS_CONNECTION_STRING: String = {
@@ -36,17 +35,30 @@ pub fn make_redis_connection() -> redis::RedisResult<redis::Connection> {
 }
 
 pub fn health_check() -> redis::RedisResult<()> {
-    let _ : () = make_redis_connection()?
-    .set("health", "ok")?;
+    let _: () = make_redis_connection()?.set("health", "ok")?;
     Ok(())
+}
+
+pub fn get_health_check() -> redis::RedisResult<String> {
+    let health_check = make_redis_connection()?.get("health")?;
+    Ok(health_check)
+}
+
+pub async fn get_async_health_check() -> redis::RedisResult<String> {
+    let health_check = make_async_redis_connection()
+        .await?
+        .get("health")
+        .await?;
+    Ok(health_check)
 }
 
 async fn async_health_check() -> redis::RedisResult<()> {
-    make_async_redis_connection().await?.set("health_async","ok").await?;
+    make_async_redis_connection()
+        .await?
+        .set("health_async", "ok")
+        .await?;
     Ok(())
 }
-
-
 
 //  ##############################
 //  ########### Tests ############
@@ -63,33 +75,54 @@ mod tests {
     }
 
     #[test]
-    fn test_normal_connection(){
+    fn test_normal_connection() {
         make_redis_connection().unwrap();
         assert_eq!(2 == 2, true);
     }
 
     #[test]
-    fn test_async_connection(){
+    fn test_async_connection() {
         aw!(make_async_redis_connection()).unwrap();
         assert_eq!(2 == 2, true);
     }
 
     #[test]
     fn test_async_health_check() {
-        let conn = aw!(async_health_check());
-        match conn  {
-            Ok(_) => (),
-            Err(e) => println!("Error in async_health_check: {}",e)
-        };
+        aw!(async_health_check()).unwrap();
         assert_eq!(2 == 2, true);
     }
 
     #[test]
     fn test_normal_health_check() {
-        match health_check(){
-            Ok(_) => (),
-            Err(e) => println!("Error in normal health check: {}", e)
-        }
+        health_check().unwrap();
         assert_eq!(2 == 2, true);
+    }
+
+    #[test]
+    fn test_get_health_check() {
+        match health_check() {
+            Ok(_) => (),
+            Err(e) => println!("Error in async_health_check: {}", e),
+        };
+        let health: String = match get_health_check() {
+            Ok(v) => v,
+            Err(e) => panic!("Error in get normal health check: {}", e),
+        };
+        assert_eq!(health, "ok");
+    }
+
+    #[test]
+    fn test_get_async_health_check() {
+        let conn = aw!(async_health_check());
+        match conn {
+            Ok(_) => (),
+            Err(e) => println!("Error in async_health_check: {}", e),
+        };
+        let health =  aw!(get_async_health_check());
+        let health: String = match health {
+            Ok(v) => v,
+            Err(e) => panic!("Error in get normal health check: {}", e),
+        };
+        assert_eq!(health, "ok");
     }
 }
