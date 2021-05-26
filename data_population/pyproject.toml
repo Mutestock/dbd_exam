@@ -17,6 +17,7 @@ python-dotenv = "^0.17.1"
 meilisearch = "^0.14.2"
 Sphinx = "^4.0.2"
 black = "^21.5b1"
+SQLAlchemy = "^1.4.15"
 
 [tool.poetry.dev-dependencies]
 pytest = "^5.2"

@@ -33,7 +33,7 @@ cpdef populate_meili_university():
     cdef meili_pool = make_meili_pool()
     cdef mongo_collection = get_mongo_collection("universities")
     cdef str index_name = "universities"
-    cdef str id_name = "university_id"
+    cdef str id_name = "index"
     cdef count_column_entries = mongo_collection.count_documents({})
     cdef all_universities
     cdef int chunk_size = 1000
@@ -44,14 +44,21 @@ cpdef populate_meili_university():
 
     all_universities = list(mongo_collection.find())
     all_universities = _formatter(all_universities)
-    cdef all_locations_formatted = []
-    for i, location in enumerate(all_locations):
-        location[id_name] = i
-        all_locations_formatted.append(location)
     
+    #cdef all_universities_formatted = []
+    #for i, university in enumerate(all_universities):
+    #    university[id_name] = i
+    #    all_universities_formatted.append(university)
+    
+    _index_resetter(meili_pool, id_name, index_name)
 
-    _index_resetter(meili_pool, "university_id", "universities")
-    _populater(meili_pool, chunk_size, "universities", all_universities)
+    #for university in all_universities:
+    #    print(university)
+    #    meili_pool.index(index_name).add_documents([university])
+
+
+
+    _populater(meili_pool, chunk_size, index_name, all_universities)
     print(f"{datetime.now().time()} - Done in {time() - time_start} seconds")
 
 
@@ -70,6 +77,7 @@ cpdef populate_meili_locations():
 
     all_locations = list(mongo_collection.find())
     all_locations = _formatter(all_locations)
+    
     cdef all_locations_formatted = []
     for i, location in enumerate(all_locations):
         location[id_name] = i

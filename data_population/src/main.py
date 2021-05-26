@@ -20,7 +20,7 @@ if __name__ == "__main__":
     mongo_populate.generate_locations()
     mongo_populate.generate_people()
     meili_populate.populate_meili_people()
-    #meili_populate.populate_meili_university()
+    meili_populate.populate_meili_university()
     meili_populate.populate_meili_locations()
     
     print(
