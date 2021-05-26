@@ -1,1 +1,1 @@
-pub mod person_handler;
+pub mod entity_handlers;

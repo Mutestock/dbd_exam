@@ -35,7 +35,7 @@ lazy_static! {
 
 #[allow(dead_code)]
 pub async fn make_mongo_pool() -> Result<Client, Error> {
-    let mut client_options = ClientOptions::parse(&MONGO_CONNECTION_STRING).await?;
+    let client_options = ClientOptions::parse(&MONGO_CONNECTION_STRING).await?;
     let client = Client::with_options(client_options)?;
     Ok(client)
 }
@@ -54,11 +54,12 @@ mod tests {
         };
     }
 
+    #[allow(dead_code)]
     #[test]
     fn test_sqrt() {
         // Can't unwrap on failure
-        let pool = aw!(make_mongo_pool()).unwrap();
-
+        let pool = aw!(make_mongo_pool());
+        pool.unwrap();
         assert_eq!(2 == 2, true);
     }
 }

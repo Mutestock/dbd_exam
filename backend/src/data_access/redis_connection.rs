@@ -1,5 +1,4 @@
 use crate::utils::environment::load_variables;
-use futures::prelude::*;
 use redis::{self, AsyncCommands, Commands};
 use std::env;
 

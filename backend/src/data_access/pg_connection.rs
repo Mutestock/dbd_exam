@@ -1,13 +1,12 @@
-use dotenv::dotenv;
-use postgres::{Client, NoTls};
-use std::env;
-use std::thread;
 
 // https://github.com/sfackler/r2d2https://github.com/sfackler/r2d2
 // https://docs.diesel.rs/diesel/r2d2/struct.ConnectionManager.html
 // https://docs.diesel.rs/diesel/pg/struct.PgConnection.html
 use diesel::r2d2::ConnectionManager;
 use diesel::PgConnection;
+use dotenv::dotenv;
+use std::env;
+
 
 pub type Pool = r2d2::Pool<ConnectionManager<PgConnection>>;
 lazy_static! {

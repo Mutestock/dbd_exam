@@ -1,8 +1,6 @@
-use crate::utils::environment::load_variables;
-use futures::executor::block_on;
-use meilisearch_sdk::{client::*, document::*, indexes::*, progress::*, search::*, settings::*};
-use serde::{Deserialize, Serialize};
-use std::{env, fs::File, io::prelude::*};
+// use futures::executor::block_on;
+use meilisearch_sdk::client::*;
+use std::env;
 
 lazy_static! {
     static ref MEILI_MASTER_KEY: String = match env::var("MEILI_MASTER_KEY") {
@@ -34,8 +32,6 @@ pub fn make_meili_pool() -> Client<'static> {
     client
 }
 
-
-
 //  ##############################
 //  ########### Tests ############
 //  ##############################
@@ -43,6 +39,7 @@ pub fn make_meili_pool() -> Client<'static> {
 #[cfg(test)]
 mod tests {
     use super::*;
+    use crate::utils::environment::load_variables;
 
     macro_rules! aw {
         ($e:expr) => {

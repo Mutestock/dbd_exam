@@ -22,9 +22,10 @@ Days:
     Rest of data files from internet found(Done)
     Postgres entities and model are both defined and visualized(Done)
     CSV -> Mongo(Done)
-    Mongo -> Meilisearch(Ongoing...)
+    Mongo -> Meilisearch(Done)
 
 26/05/21
+    Mongo -> Postgres(Ongoing ...)
     Entire Rust Diesel ORM setup
     All routes implemented with Warp
     Basic routes with Meili

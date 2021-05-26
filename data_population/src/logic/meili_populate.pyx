@@ -45,18 +45,7 @@ cpdef populate_meili_university():
     all_universities = list(mongo_collection.find())
     all_universities = _formatter(all_universities)
     
-    #cdef all_universities_formatted = []
-    #for i, university in enumerate(all_universities):
-    #    university[id_name] = i
-    #    all_universities_formatted.append(university)
-    
     _index_resetter(meili_pool, id_name, index_name)
-
-    #for university in all_universities:
-    #    print(university)
-    #    meili_pool.index(index_name).add_documents([university])
-
-
 
     _populater(meili_pool, chunk_size, index_name, all_universities)
     print(f"{datetime.now().time()} - Done in {time() - time_start} seconds")
