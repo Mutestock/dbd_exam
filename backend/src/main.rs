@@ -1,4 +1,5 @@
 use warp::Filter;
+
 #[macro_use]
 extern crate diesel;
 pub mod schema;
@@ -9,6 +10,7 @@ extern crate lazy_static;
 
 mod data_access;
 mod utils;
+mod entities;
 
 #[tokio::main]
 async fn main() {
