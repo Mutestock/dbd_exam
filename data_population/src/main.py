@@ -16,20 +16,10 @@ if __name__ == "__main__":
         """
     )
     time_start = time()
+    #mongo_populate.generate_universities()
+    #mongo_populate.generate_locations()
+    #mongo_populate.generate_people()
     meili_populate.populate_meili_people()
-    # pyximport.install()
-    # thing = mongo_populate.generate_phone_number()
-    #
-    # pool = make_mongo_pool()
-    # db = pool["softdbd_db"]
-    # collection = db["universities"]
-    # print("Document count = ", collection.count_documents({}))
-    # print(thing)
-    mongo_populate.generate_universities()
-    mongo_populate.generate_locations()
-    mongo_populate.generate_people()
-    meili_populate.populate_meili_people()
-    # cli.manager()
     
     print(
         f"{datetime.now().time()} - ヽ༼ຈل͜ຈ༽ﾉ All Done in {time() - time_start} seconds"
