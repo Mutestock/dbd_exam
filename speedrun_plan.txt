@@ -26,7 +26,7 @@ Days:
 
 26/05/21
     Mongo -> Postgres(Ongoing ...)
-    Entire Rust Diesel ORM setup
+    Entire Rust Diesel ORM setup(Ongoing ...)
     All routes implemented with Warp
     Basic routes with Meili
     Basic routes with Mongo
