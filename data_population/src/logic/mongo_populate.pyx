@@ -22,30 +22,39 @@ cpdef generate_phone_number():
 
 
 cpdef generate_email(df):
-    cdef int random_index = random.randint(0, len(EMAIL_DOMAIN_NAMES) -1)
+    cdef int random_index = random.randint(0, len(EMAIL_DOMAIN_NAMES) - 1)
     cdef str suffix = EMAIL_DOMAIN_NAMES[random_index]
     cdef str prefix = ''.join(df.sample().iloc[0])
     return f"{prefix}@{suffix}"
 
 
-cpdef grab_first_name(df):
-    return str(df.sample().iloc[0])
+cpdef generate_road_name(df):
+    cdef int random_index = random.randint(0, len(ADDRESS_STREET_SYNONYMS) - 1)
+    cdef str street_synonym = ADDRESS_STREET_SYNONYMS[random_index]
+    cdef int street_number = random.randint(1,999)
+    cdef str street_name = ''.join(df.sample().iloc[0])
+    return f"{street_name} {street_synonym} {street_number}"
 
 
-cpdef grab_last_name(df):
-    return str(df.sample().iloc[0])
+cpdef grab_df_sample(df):
+    cdef int random_index = random.randint(0, len(df) - 1)
+    return df.iloc[random_index]
 
 
-cpdef grab_prepared_email_df():
-    return pd.read_csv(DATASETS.get("random_words_for_email_generation"))
+cpdef grab_prepared_random_df():
+    return pd.read_csv(DATASETS.get("random_words")).astype("str")
 
 
 cpdef grab_prepared_last_names_df():
-    return pd.read_csv(DATASETS.get('last_names'), delimiter=";")["surname"]
+    return (pd.read_csv(DATASETS.get('last_names'), delimiter=";")["surname"]).astype("str")
 
 
 cpdef grab_prepared_first_names_df():
-    return pd.read_csv(DATASETS.get('first_names'))["name"]
+    return (pd.read_csv(DATASETS.get('first_names'))["name"]).astype("str")
+
+
+cpdef grab_prepared_countries_df():
+    return (pd.read_csv(DATASETS.get('countries'))["name"]).astype("str")
 
 
 cpdef generate_people():
@@ -57,7 +66,7 @@ cpdef generate_people():
 
     # Retrieving datasets to retrieve samples from.
     # This is for random data generation.
-    cdef email_df = grab_prepared_email_df()
+    cdef random_words_df = grab_prepared_random_df()
     cdef last_names_df = grab_prepared_last_names_df()
     cdef first_names_df = grab_prepared_first_names_df()
 
@@ -69,14 +78,15 @@ cpdef generate_people():
     for count, filename in enumerate(os.listdir(ANIME_DIR)):
         if count % 2000 == 0:
             print(f"{datetime.now().time()} - MongoDB: {count} / {anime_dir_length} completed ...")
+
         collection.insert_one({
-            "first_name": grab_first_name(first_names_df),
-            "last_name": grab_last_name(last_names_df),
-            "email": generate_email(email_df),
+            "first_name": grab_df_sample(first_names_df),
+            "last_name": grab_df_sample(last_names_df),
+            "email": generate_email(random_words_df),
             "phone_number": generate_phone_number(),
             "avatar": filename
         })
-    print(f"{datetime.now().time()} - MongoDB: Done in {time_start - time.time()} seconds")
+    print(f"{datetime.now().time()} - MongoDB: Done in {time.time() - time_start} seconds")
 
 
 cpdef generate_universities():
@@ -96,6 +106,28 @@ cpdef generate_universities():
 
 cpdef generate_locations():
     cdef collection = get_mongo_collection("locations")
+    cdef int i
+    cdef random_words_df = grab_prepared_random_df()
+    cdef countries_df = grab_prepared_countries_df()
+    cdef int iter_count = 40000
+    cdef time_start
+
+    print(f"{datetime.now().time()} - MongoDB: Flushing locations...")
+    collection.drop()
+    print(f"{datetime.now().time()} - MongoDB: Populating locations...")
+    time_start = time.time()
+    for i in range(iter_count):
+        if i % 2000 == 0:
+            print(f"{datetime.now().time()} - MongoDB: {i} / {iter_count} completed ...")
+        collection.insert_one({
+            "street_name": generate_road_name(random_words_df),
+            "zipcode": str(random.randint(10000, 99999)),
+            "country":grab_df_sample(countries_df).capitalize()
+        })
+    print(f"{datetime.now().time()} - MongoDB: Done in {time.time() - time_start} seconds")
+
+
+
 
 
 

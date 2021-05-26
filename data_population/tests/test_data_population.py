@@ -32,19 +32,19 @@ class TestMongo(unittest.TestCase):
         self.assertTrue(test_id is not None)
 
     def test_email_generation(self):
-        email_df = mongo_populate.grab_prepared_email_df()
+        email_df = mongo_populate.grab_prepared_random_df()
         email = mongo_populate.generate_email(email_df)
         self.assertTrue("@" in email)
         self.assertTrue(len(email.split("@")) == 2)
         
     def test_first_name_generation(self):
         first_name_df = mongo_populate.grab_prepared_first_names_df()
-        first_name = mongo_populate.grab_first_name(first_name_df)
+        first_name = mongo_populate.grab_df_sample(first_name_df)
         self.assertTrue(first_name is not None)
     
     def test_last_names_generation(self):
         last_names_df = mongo_populate.grab_prepared_last_names_df()
-        last_name = mongo_populate.grab_last_name(last_names_df)
+        last_name = mongo_populate.grab_df_sample(last_names_df)
         self.assertTrue(last_name is not None)
 
 class TestMeili(unittest.TestCase):

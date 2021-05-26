@@ -21,8 +21,8 @@ Days:
 25/05/21
     Rest of data files from internet found(Done)
     Postgres entities and model are both defined and visualized(Done)
-    CSV -> Mongo(Ongoing...)
-    Mongo -> Meilisearch
+    CSV -> Mongo(Done)
+    Mongo -> Meilisearch(Ongoing...)
 
 26/05/21
     Entire Rust Diesel ORM setup

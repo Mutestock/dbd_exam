@@ -12,6 +12,7 @@ DATASETS = {
     "universities": DATASETS_DIR + "/universities.csv",
     "first_names": DATASETS_DIR + "/first_names_formatted.csv",
     "last_names": DATASETS_DIR + "/surnames_formatted.csv",
-    "random_words_for_email_generation": DATASETS_DIR
+    "random_words": DATASETS_DIR
     + "/random_words_for_email_generation.csv",
+    "countries": DATASETS_DIR + "/countries.csv"
 }
