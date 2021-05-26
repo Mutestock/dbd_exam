@@ -4,5 +4,4 @@ pyximport.install(inplace=True, build_dir=".", language_level=3)
 import logic.mongo_populate
 import logic.meili_populate
 
-stuff = mongo_populate.generate_phone_number()
-print(stuff)
+

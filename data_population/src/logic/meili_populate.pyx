@@ -32,16 +32,23 @@ cpdef populate_meili_people():
 cpdef populate_meili_university():
     cdef meili_pool = make_meili_pool()
     cdef mongo_collection = get_mongo_collection("universities")
+    cdef str index_name = "universities"
+    cdef str id_name = "university_id"
     cdef count_column_entries = mongo_collection.count_documents({})
     cdef all_universities
     cdef int chunk_size = 1000
     cdef time_start = time()
 
-
     print(f"{datetime.now().time()} - MongoDB: Amount of entries: {count_column_entries}...")
     print(f"{datetime.now().time()} - MongoDB: Grabbing all rows...")
+
     all_universities = list(mongo_collection.find())
     all_universities = _formatter(all_universities)
+    cdef all_locations_formatted = []
+    for i, location in enumerate(all_locations):
+        location[id_name] = i
+        all_locations_formatted.append(location)
+    
 
     _index_resetter(meili_pool, "university_id", "universities")
     _populater(meili_pool, chunk_size, "universities", all_universities)
@@ -60,11 +67,17 @@ cpdef populate_meili_locations():
 
     print(f"{datetime.now().time()} - MongoDB: Amount of entries: {count_column_entries}...")
     print(f"{datetime.now().time()} - MongoDB: Grabbing all rows...")
+
     all_locations = list(mongo_collection.find())
     all_locations = _formatter(all_locations)
+    cdef all_locations_formatted = []
+    for i, location in enumerate(all_locations):
+        location[id_name] = i
+        all_locations_formatted.append(location)
 
-    _index_resetter(meili_pool, "location_id", index_name)
-    _populater(meili_pool, chunk_size, index_name, all_locations)
+    _index_resetter(meili_pool, id_name, index_name)
+    _populater(meili_pool, chunk_size, index_name, all_locations_formatted)
+    meili_pool.index(index_name).add_documents([all_locations[0]])
     print(f"{datetime.now().time()} - Done in {time() - time_start} seconds")
 
 
@@ -74,20 +87,20 @@ cpdef _formatter(content):
 
 cpdef _index_resetter(meili_pool, str id_name, str index_name):
     try:
+        print(f"{datetime.now().time()} - Meilisearch: Create index {index_name}...")
+        meili_pool.create_index(index_name, {
+                "primaryKey": id_name,
+                "name": index_name
+        })
+    except: 
         print(f"{datetime.now().time()} - Meilisearch: Resetting {index_name} index...")
         meili_pool.index(index_name).delete_all_documents()
-        #meili_pool.create_index(index_name, {
-        #    "primaryKey": id_name,
-        #    "name": index_name
-        #})
-    except: 
-        print(f"{datetime.now().time()} - Meilisearch: Create index from columns...")
+        meili_pool.index(index_name).delete()
         meili_pool.create_index(index_name, {
-            "primaryKey": id_name,
-            "name": index_name
+                "primaryKey": id_name,
+                "name": index_name
         })
-    #finally:
-    #    meili_pool.index(index_name).delete_all_documents()
+
 
 cpdef _populater(meili_pool, int chunk_size, str index_name, content):
     cdef int updated_range

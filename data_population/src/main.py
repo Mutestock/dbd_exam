@@ -10,8 +10,8 @@ from datetime import datetime
 if __name__ == "__main__":
     print(
         """
-          Some of these processes will take some time
-          There's a lot data which is randomly fetched from some csv files.
+          Some of these processes will take some time.
+          Much of the data is randomly generated.
           Expect like 5~ minutes total.
         """
     )
@@ -21,7 +21,7 @@ if __name__ == "__main__":
     mongo_populate.generate_people()
     meili_populate.populate_meili_people()
     #meili_populate.populate_meili_university()
-    #meili_populate.populate_meili_locations()
+    meili_populate.populate_meili_locations()
     
     print(
         f"{datetime.now().time()} - ヽ༼ຈل͜ຈ༽ﾉ All Done in {time() - time_start} seconds"
