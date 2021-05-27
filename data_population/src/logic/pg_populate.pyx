@@ -3,7 +3,7 @@ from connection.mongo_connection import get_mongo_collection
 
 
 from datetime import datetime
-import time
+from time import time
 import random
 
 cpdef reset_tables():
@@ -81,7 +81,7 @@ cdef _populate_locations():
     cdef str street_name
     cdef str zipcode
     cdef str country
-    
+    cdef time_start = time()
 
     print(f"{datetime.now().time()} - PostgreSQL: Populating locations...")
     for i, location in enumerate(all_locations):
@@ -104,6 +104,8 @@ cdef _populate_locations():
     cursor.close()
     conn.close()
 
+    print(f"{datetime.now().time()} - Done in {time() - time_start} seconds")
+
 cdef _populate_universities():
     cdef conn = make_pg_pool()
     cdef cursor = conn.cursor()
@@ -116,6 +118,7 @@ cdef _populate_universities():
     cdef str university_name
     cdef str website_url
     cdef int locations_id
+    cdef time_start = time()
 
     print(f"{datetime.now().time()} - PostgreSQL: Populating universities...")
     for i, university in enumerate(all_universities):
@@ -134,7 +137,13 @@ cdef _populate_universities():
         if "'" in website_url:
             website_url = website_url.replace("'","’\\’")
         
-        cursor.execute(f"INSERT INTO universities VALUES(DEFAULT, E'{country_index}', E'{university_name}', E'{website_url}', {locations_id})")        
+        cursor.execute(f"INSERT INTO universities VALUES(DEFAULT, E'{country_index}', E'{university_name}', E'{website_url}', {locations_id})")  
+    
+    conn.commit()
+    cursor.close()
+    conn.close()
+
+    print(f"{datetime.now().time()} - Done in {time() - time_start} seconds")
         
 cdef _populate_people():
     cdef conn = make_pg_pool()
@@ -152,6 +161,7 @@ cdef _populate_people():
     cdef str avatar
     cdef int locations_id
     cdef int university_id
+    cdef time_start = time()
 
     print(f"{datetime.now().time()} - PostgreSQL: Populating people...")
     for i, person in enumerate(all_people):
@@ -179,4 +189,9 @@ cdef _populate_people():
             avatar = avatar.replace("'","’\\’")
 
         cursor.execute(f"INSERT INTO people VALUES(DEFAULT, E'{first_name}', E'{last_name}', E'{email}', E'{phone_number}', E'{avatar}', DEFAULT, DEFAULT, {university_id}, {locations_id})")        
+    
+    conn.commit()
+    cursor.close()
+    conn.close()
 
+    print(f"{datetime.now().time()} - Done in {time() - time_start} seconds")
