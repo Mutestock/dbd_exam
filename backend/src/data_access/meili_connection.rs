@@ -48,7 +48,7 @@ mod tests {
     }
 
     #[test]
-    fn test_sqrt() {
+    fn test_meili_health() {
         load_variables();
         let client = make_meili_pool();
         // Can't unwrap on failure

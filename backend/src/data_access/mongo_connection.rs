@@ -27,8 +27,13 @@ lazy_static! {
         };
 
         format!(
-            "mongodb://{}:{}@{}:{}",
-            mongo_username, mongo_password, mongo_host, mongo_port
+            // This format is changed due to data processing's issue with connecting with auth
+            // No time to troubleshoot =/
+            // "mongodb://{}:{}@{}:{}",
+            // mongo_username, mongo_password, mongo_host, mongo_port
+
+            "mongodb://{}:{}",
+            mongo_host, mongo_port
         )
     };
 }
@@ -56,7 +61,7 @@ mod tests {
 
     #[allow(dead_code)]
     #[test]
-    fn test_sqrt() {
+    fn test_make_mongo_pool() {
         // Can't unwrap on failure
         let pool = aw!(make_mongo_pool());
         pool.unwrap();

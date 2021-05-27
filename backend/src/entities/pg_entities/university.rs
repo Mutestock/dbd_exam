@@ -17,6 +17,7 @@ struct University {
     university_name: String,
     country_index: String,
     website_url: String,
+    locations_id: Option<i32>,
 }
 
 #[derive(Insertable, Deserialize, AsChangeset, PartialEq)]
@@ -25,6 +26,7 @@ struct NewUniversity {
     university_name: String,
     country_index: String,
     website_url: String,
+    locations_id: Option<i32>,
 }
 
 

@@ -21,6 +21,8 @@ pub struct Person {
     avatar: String,
     created_at: Option<SystemTime>,
     updated_at: Option<SystemTime>,
+    locations_id: Option<i32>,
+    university_id: Option<i32>,
 }
 
 #[derive(Insertable, Deserialize, AsChangeset, PartialEq)]
