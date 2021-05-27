@@ -25,9 +25,9 @@ Days:
     Mongo -> Meilisearch(Done)
 
 26/05/21
-    Mongo -> Postgres(Ongoing ...)
+    Mongo -> Postgres(Done)
     Entire Rust Diesel ORM setup(Ongoing ...)
-    All routes implemented with Warp
+    All PG CRUD routes implemented with Warp
     Basic routes with Meili
     Basic routes with Mongo
 
@@ -56,5 +56,5 @@ Days:
     Frontend can display changelog
 
 01/06/21
-    Buffer
+    Buffer / Report
 

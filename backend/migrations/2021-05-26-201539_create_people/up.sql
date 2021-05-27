@@ -10,7 +10,9 @@ CREATE TABLE IF NOT EXISTS people (
     phone_number VARCHAR(50) NOT NULL,
     avatar VARCHAR(100) NOT NULL,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    university_id INTEGER REFERENCES universities,
+    locations_id INTEGER REFERENCES locations
 );
 
 
