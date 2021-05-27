@@ -83,7 +83,7 @@ cpdef _formatter(content):
     return [{k:v for k,v in entry.items() if k!= "_id"} for entry in content]
 
 cpdef _index_resetter(meili_pool, str id_name, str index_name):
-    sleep(2)
+    print("Cooldown 5 secs")
     try:
         print(f"{datetime.now().time()} - Meilisearch: Create index {index_name}...")
         meili_pool.create_index(index_name, {
@@ -108,12 +108,11 @@ cpdef _populater(meili_pool, int chunk_size, str index_name, content):
     cdef int j
 
     print(f"{datetime.now().time()} - Meilisearch: Populating...")
-    print(extra)
 
     for i in range(0, indexer):
         updated_range = i*chunk_size
         # v The database actually gets overloaded without this 
-        sleep(0.2)
+        #sleep(0.3)
         if updated_range % 5000 == 0:
             print(f"{datetime.now().time()} - Meilisearch: {updated_range} / {len(content)} completed ...")        
         list_thing = []

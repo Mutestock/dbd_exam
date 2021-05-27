@@ -11,6 +11,7 @@ mongo_connection = importlib.import_module("connection.mongo_connection", SRC_PA
 environment = importlib.import_module("utils.environment", SRC_PATH)
 aliases = importlib.import_module("utils.aliases", SRC_PATH)
 mongo_populate = importlib.import_module("logic.mongo_populate", SRC_PATH)
+logic = importlib.import_module("logic", SRC_PATH)
 
 
 class TestMisc(unittest.TestCase):

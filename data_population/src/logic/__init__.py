@@ -1,4 +1,5 @@
 import pyximport
+import utils.environment
 
 print("Building Cython")
 pyximport.install(inplace=True, build_dir=".", language_level=3)

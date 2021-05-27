@@ -18,11 +18,11 @@ if __name__ == "__main__":
     )
     time_start = time()
     mongo_populate.generate_universities()
+    meili_populate.populate_meili_university()
     mongo_populate.generate_locations()
+    meili_populate.populate_meili_locations()
     mongo_populate.generate_people()
     meili_populate.populate_meili_people()
-    meili_populate.populate_meili_university()
-    meili_populate.populate_meili_locations()
     pg_populate.reset_tables()
     pg_populate.mass_populate()
     

@@ -16,7 +16,7 @@ MONGO_DATABASE = os.getenv("MONGO_INITDB_DATABASE")
 # Not enough time to create the correct solution
 
 def make_mongo_pool():
-    conn_str = "localhost:31293"
+    conn_str = f"{MONGO_HOST}:{MONGO_PORT}"
     return MongoClient(conn_str)
 
 def get_mongo_collection(collection):

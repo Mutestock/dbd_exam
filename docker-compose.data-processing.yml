@@ -11,22 +11,21 @@ services:
           - POSTGRES_USER=softdbd_user
           - POSTGRES_PASSWORD=softdbd_pass
           - POSTGRES_DB=softdbd_db
-          - POSTGRES_PORT=31295
+          - POSTGRES_PORT=5432
           - MONGO_INITDB_ROOT_USERNAME=softdbd_user
           - MONGO_INITDB_ROOT_PASSWORD=softdbd_pass
-          - MONGO_PORT=30293
+          - MONGO_PORT=27017
           - MONGO_HOST=mongo_basic_info_storage
           - MONGO_INITDB_DATABASE=softdbd_db
           - MEILI_HOST=search_engine
-          - MEILI_PORT=31294
+          - MEILI_PORT=7700
           - MEILI_MASTER_KEY=jaedenar_nutcracker
-        ports:
-          - 31292:31292
         volumes:
-            - ./resources:/resources
+            - ./resources:/usr/src/resources
         networks: 
-          - app-network  
+          - app-network
             
 networks:
   app-network:
     driver: "bridge"
+    name: app-network

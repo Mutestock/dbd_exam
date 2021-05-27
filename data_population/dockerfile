@@ -29,9 +29,24 @@ RUN pip install --no-cache-dir -r requirements.txt
 
 COPY . .
 
+
 ENV PYTHONDONTWRITEBYTECODE 1
 ENV PYTHONUNBUFFERED 1
 
-EXPOSE 31292
+# ARG PRODUCTION_VARIABLES=1
+# ARG POSTGRES_HOST=pg_dbd_exam
+# ARG POSTGRES_USER=softdbd_user
+# ARG POSTGRES_PASSWORD=softdbd_pass
+# ARG POSTGRES_DB=softdbd_db
+# ARG POSTGRES_PORT=5432
+# ARG MONGO_INITDB_ROOT_USERNAME=softdbd_user
+# ARG MONGO_INITDB_ROOT_PASSWORD=softdbd_pass
+# ARG MONGO_PORT=27017
+# ARG MONGO_HOST=mongo_basic_info_storage
+# ARG MONGO_INITDB_DATABASE=softdbd_db
+# ARG MEILI_HOST=search_engine
+# ARG MEILI_PORT=7700
+# ARG MEILI_MASTER_KEY=jaedenar_nutcracker
+# RUN nose2 -v
 
-CMD ["python","src/main.py"]
+CMD ["python", "src/main.py"]
