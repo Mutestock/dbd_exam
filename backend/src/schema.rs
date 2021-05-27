@@ -2,7 +2,7 @@ table! {
     locations (id) {
         id -> Int4,
         street_name -> Varchar,
-        zip_code -> Varchar,
+        zipcode -> Varchar,
         country -> Varchar,
     }
 }

@@ -5,6 +5,6 @@
 CREATE TABLE IF NOT EXISTS locations(
     id SERIAL PRIMARY KEY NOT NULL,
     street_name VARCHAR(500) NOT NULL,
-    zip_code VARCHAR(50) NOT NULL,
+    zipcode VARCHAR(50) NOT NULL,
     country VARCHAR(500) NOT NULL
 );

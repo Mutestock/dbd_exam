@@ -8,8 +8,9 @@ or
 [Some other python virtual environment](https://docs.python.org/3/library/venv.html#creating-virtual-environments)
 
 C compiler for Cython
-Linux: 
-> dnf install gcc (Or your distribution's equivalent)
+Linux:
+
+> dnf install gcc (Or your distribution's equivalent) \
 [minGW for Windows?](http://mingw.osdn.io/)
 
 Linux: 
@@ -18,16 +19,16 @@ libpg-devel (or your distribution's equivalent (postgresql-devel on fedora) )
 Others:
 Possibly more dependencies. I'm using Linux, so it's hard for me to certain
 
-
-
 If you're not using poetry - after having activated your virtual environment:
-pip install -r requirements.txt
+
+>pip install -r requirements.txt
 
 Otherwise use guide below
 
 ##
 For development purposes, the backend can be run with:
-> python src/main.py
+
+>python src/main.py
 
 ## Poetry guide
 

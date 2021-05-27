@@ -9,8 +9,8 @@ CREATE TABLE IF NOT EXISTS people (
     email VARCHAR(500) NOT NULL,
     phone_number VARCHAR(50) NOT NULL,
     avatar VARCHAR(100) NOT NULL,
-    created_at TIMESTAMP,
-    updated_at TIMESTAMP
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
 

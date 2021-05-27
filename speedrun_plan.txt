@@ -32,9 +32,6 @@ Days:
     Basic routes with Mongo
 
 27/05/21
-    (UFO report finalized and sent to Wiseflow)
-    (UFO recommending literature to other group)
-    (https://datsoftlyngby.github.io/soft2021spring/resources/9c5e8e32-exam-task.pdf)
     Basic routes with Redis
     Redis caching system implemented
 
