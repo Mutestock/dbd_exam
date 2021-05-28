@@ -3,14 +3,14 @@ use std::env;
 
 lazy_static! {
     static ref MONGO_CONNECTION_STRING: String = {
-        let mongo_username = match env::var("MONGO_INITDB_ROOT_USERNAME") {
+        let _mongo_username = match env::var("MONGO_INITDB_ROOT_USERNAME") {
             Ok(v) => v,
             Err(e) => panic!(
                 "MONGO_INITDB_ROOT_USERNAME missing environment variable {}",
                 e
             ),
         };
-        let mongo_password = match env::var("MONGO_INITDB_ROOT_PASSWORD") {
+        let _mongo_password = match env::var("MONGO_INITDB_ROOT_PASSWORD") {
             Ok(v) => v,
             Err(e) => panic!(
                 "MONGO_INITDB_ROOT_PASSWORD missing environment variable {}",

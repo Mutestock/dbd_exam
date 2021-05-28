@@ -12,7 +12,7 @@ use crate::schema::locations::dsl::*;
 
 #[derive(Identifiable, Queryable, Serialize, Deserialize, Debug, PartialEq)]
 #[table_name = "locations"]
-struct Location {
+pub struct Location {
     id: i32,
     street_name: String,
     zipcode: String,
@@ -22,7 +22,7 @@ struct Location {
 
 #[derive(Insertable, Deserialize, AsChangeset, PartialEq)]
 #[table_name = "locations"]
-struct NewLocation {
+pub struct NewLocation {
     street_name: String,
     zipcode: String,
     country: String,

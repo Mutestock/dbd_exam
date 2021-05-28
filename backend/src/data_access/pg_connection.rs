@@ -72,7 +72,7 @@ mod tests {
 
     #[test]
     fn test_get_pool() {
-        let pool = &POOL;
+        let _pool = &POOL;
         assert_eq!(2 == 2, true);
     }
 }

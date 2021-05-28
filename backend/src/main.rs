@@ -2,26 +2,68 @@ use warp::Filter;
 
 #[macro_use]
 extern crate diesel;
+#[macro_use]
+extern crate diesel_migrations;
 pub mod schema;
-
 
 #[macro_use]
 extern crate lazy_static;
 
 mod data_access;
-mod utils;
 mod entities;
+mod logic;
+mod service;
+mod utils;
+
+use self::{
+    logic::entity_handlers::{location_handler, person_handler, university_handler},
+    service::routes::pg_routes::{location_routes, person_routes, university_routes},
+};
 
 #[tokio::main]
 async fn main() {
-    println!("Starting Warp backend");
-    // GET /hello/warp => 200 OK with body "Hello, warp!"
-    let hello = warp::path!("hello" / String)
-        .map(|name| format!("Hello, {}!", name));
 
-    warp::serve(hello)
-        .run(([0, 0, 0, 0], 3030))
-        .await;
-    println!("Exiting Warp backend")
+    println!("Backend: Starting Diesel migrations...");
+    let connection = data_access::pg_connection::POOL.get().unwrap();
+    embed_migrations!();
+    embedded_migrations::run_with_output(&connection, &mut std::io::stdout())
+        .expect("Diesel embedded migrations failed!");
+
+    let cors = warp::cors()
+        .allow_any_origin()
+        .allow_headers(vec!["User-Agent", "Sec-Fetch-Mode", "Referer", "Origin", "Access-Control-Request-Method", "Access-Control-Request-Headers", "content-type","Access-Control-Allow-Origin"])
+        .allow_methods(vec!["POST", "GET", "PUT", "DELETE"])
+        .build();
+
+    let log = warp::log("api::request");
+
+    println!("Backend: Establishing Warp routes...");
+    let location_routes = list_locations!()
+        .or(get_location!())
+        .or(create_location!())
+        .or(update_location!())
+        .or(delete_location!());
+    
+    let person_routes = list_people!()
+        .or(get_person!())
+        .or(create_person!())
+        .or(update_person!())
+        .or(delete_person!());
+
+    let university_routes = list_universities!()
+        .or(get_university!())
+        .or(create_university!())
+        .or(update_university!())
+        .or(delete_university!());
+ 
+    let router = location_routes
+        .or(person_routes)
+        .or(university_routes)
+        .with(log)
+        .with(cors);
+
+
+    println!("Backend: Starting Warp backend...");
+    warp::serve(router).run(([0, 0, 0, 0], 3030)).await;
+    println!("Backend: Exiting Warp backend")
 }
-

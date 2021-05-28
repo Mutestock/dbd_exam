@@ -12,7 +12,7 @@ use crate::schema::universities::dsl::*;
 
 #[derive(Identifiable, Queryable, Serialize, Deserialize, Debug, PartialEq)]
 #[table_name = "universities"]
-struct University {
+pub struct University {
     id: i32,
     university_name: String,
     country_index: String,
@@ -22,7 +22,7 @@ struct University {
 
 #[derive(Insertable, Deserialize, AsChangeset, PartialEq)]
 #[table_name = "universities"]
-struct NewUniversity {
+pub struct NewUniversity {
     university_name: String,
     country_index: String,
     website_url: String,
