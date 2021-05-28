@@ -5,6 +5,16 @@ Use these commands (In this order):
 > docker-compose -f docker-compose.data-processing.yml up \
 > docker-compose -f docker-compose.main.yml up
 
+Run this command:
+
+> docker-compose up --build
+
+The entire project's total size is 8~ gb.
+It'll probably take 10 minutes total. Don't stop the process prematurely. 
+It's done when you see this guy: ヽ༼ຈل͜ຈ༽ﾉ
+
+
+
 Use -d for detached mode. \
 Or start a new terminal with each command. \
 Note that data-population shuts down immediately after having finished its purpose. \
@@ -38,6 +48,7 @@ Functional postgres setup on the machine. \
             > sudo dnf install postgresql-devel \
 Python 3.9 \
 C Compiler for Cython (Like gcc). \
+Rust 1.52.1
 
 #### Optional
 

@@ -1,3 +1,4 @@
+
 use warp::Filter;
 
 #[macro_use]
@@ -18,16 +19,17 @@ mod utils;
 use self::{
     logic::entity_handlers::{location_handler, person_handler, university_handler},
     service::routes::pg_routes::{location_routes, person_routes, university_routes},
+    utils::environment::load_variables,
 };
 
 #[tokio::main]
 async fn main() {
-
-    println!("Backend: Starting Diesel migrations...");
-    let connection = data_access::pg_connection::POOL.get().unwrap();
-    embed_migrations!();
-    embedded_migrations::run_with_output(&connection, &mut std::io::stdout())
-        .expect("Diesel embedded migrations failed!");
+    load_variables();
+    //println!("Backend: Starting Diesel migrations...");
+    //let connection = data_access::pg_connection::POOL.get().unwrap();
+    //embed_migrations!();
+    //embedded_migrations::run_with_output(&connection, &mut std::io::stdout())
+    //    .expect("Diesel embedded migrations failed!");
 
     let cors = warp::cors()
         .allow_any_origin()
