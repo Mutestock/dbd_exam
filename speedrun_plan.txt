@@ -28,7 +28,7 @@ Days:
     Mongo -> Postgres(Done)
     Entire Rust Diesel ORM setup(Done)
     All PG CRUD routes implemented with Warp(Done)
-    Stable docker-compose(Ongoing...)
+    Stable docker-compose(Done)
     Basic routes with Meili
     Basic routes with Mongo
 

@@ -9,9 +9,9 @@ Run this command:
 
 > docker-compose up --build
 
-The entire project's total size is 8~ gb.
-It'll probably take 10 minutes total. Don't stop the process prematurely. 
-It's done when you see this guy: ヽ༼ຈل͜ຈ༽ﾉ
+The entire project's total size is 8~ gb. \
+It'll probably take 10 minutes total. Don't stop the process prematurely. \
+It's done when you see this guy: ヽ༼ຈل͜ຈ༽ﾉ \
 
 
 
@@ -27,7 +27,7 @@ That takes too long time to set up. \
 Containers: \
 localhost:31290 - Frontend \
 localhost:31291 - Backend \
-localhost:31292 - Data processing(shuts down immediately) \
+localhost:31292 - Data processing(shuts down after use) \
 localhost:31293 - Mongodb \
 localhost:31294 - Meilisearch \
 localhost:31295 - Postgres \

@@ -26,8 +26,8 @@ services:
             - ./data/meili/data.ms:/data.ms
         networks: 
           - app-network
-        #environment:
-        #    - MEILI_MASTER_KEY=jaedenar_nutcracker
+        environment:
+            - MEILI_MASTER_KEY=jaedenar_nutcracker
 
     pg_dbd_exam:
         container_name: pg_dbd_exam

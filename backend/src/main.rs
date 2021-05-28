@@ -3,13 +3,11 @@ use warp::Filter;
 
 #[macro_use]
 extern crate diesel;
-#[macro_use]
-extern crate diesel_migrations;
-pub mod schema;
 
 #[macro_use]
 extern crate lazy_static;
 
+pub mod schema;
 mod data_access;
 mod entities;
 mod logic;
@@ -24,12 +22,9 @@ use self::{
 
 #[tokio::main]
 async fn main() {
+
+    // Runs container/local switch
     load_variables();
-    //println!("Backend: Starting Diesel migrations...");
-    //let connection = data_access::pg_connection::POOL.get().unwrap();
-    //embed_migrations!();
-    //embedded_migrations::run_with_output(&connection, &mut std::io::stdout())
-    //    .expect("Diesel embedded migrations failed!");
 
     let cors = warp::cors()
         .allow_any_origin()

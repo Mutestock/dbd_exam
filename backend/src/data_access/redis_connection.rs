@@ -21,15 +21,14 @@ lazy_static! {
 #[allow(dead_code)]
 pub async fn make_async_redis_connection() -> redis::RedisResult<redis::aio::Connection> {
     let client = redis::Client::open(REDIS_CONNECTION_STRING.to_string())?;
-    let con = client.get_async_connection().await?;
-    Ok(con)
+    let conn = client.get_async_connection().await?;
+    Ok(conn)
 }
 
 #[allow(dead_code)]
 pub fn make_redis_connection() -> redis::RedisResult<redis::Connection> {
     let client = redis::Client::open(REDIS_CONNECTION_STRING.to_string())?;
     let conn = client.get_connection()?;
-
     Ok(conn)
 }
 
@@ -47,10 +46,7 @@ pub fn get_health_check() -> redis::RedisResult<String> {
 
 #[allow(dead_code)]
 pub async fn get_async_health_check() -> redis::RedisResult<String> {
-    let health_check = make_async_redis_connection()
-        .await?
-        .get("health")
-        .await?;
+    let health_check = make_async_redis_connection().await?.get("health").await?;
     Ok(health_check)
 }
 
@@ -121,7 +117,7 @@ mod tests {
             Ok(_) => (),
             Err(e) => println!("Error in async_health_check: {}", e),
         };
-        let health =  aw!(get_async_health_check());
+        let health = aw!(get_async_health_check());
         let health: String = match health {
             Ok(v) => v,
             Err(e) => panic!("Error in get normal health check: {}", e),
