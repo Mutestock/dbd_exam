@@ -11,7 +11,8 @@ Run this command:
 
 The entire project's total size is 8~ gb. \
 It'll probably take 10 minutes total. Don't stop the process prematurely. \
-It's done when you see this guy: ヽ༼ຈل͜ຈ༽ﾉ \
+3~ minutes of those 10~ comes from the data-population container. \
+The entire process is done when you see this guy: ヽ༼ຈل͜ຈ༽ﾉ 
 
 
 
@@ -32,7 +33,7 @@ localhost:31293 - Mongodb \
 localhost:31294 - Meilisearch \
 localhost:31295 - Postgres \
 localhost:31296 - Redis \
-localhost:31297 - Redis-commander \
+localhost:31297 - Redis-commander 
 
 
 ### Running locally without containers:
@@ -52,4 +53,4 @@ Rust 1.52.1
 
 #### Optional
 
-Poetry \
+Poetry 
