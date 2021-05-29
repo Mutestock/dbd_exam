@@ -2,7 +2,7 @@ use warp;
 
 use crate::data_access::pg_connection::POOL;
 use crate::entities::pg_entities::location::{
-    CachedLocation, Location, CachedLocationsList, NewLocation,
+    CachedLocation, CachedLocationsList, Location, NewLocation,
 };
 use crate::entities::shared_behaviour::CacheAble;
 use crate::logic::caching;

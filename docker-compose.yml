@@ -33,11 +33,11 @@ services:
         container_name: pg_dbd_exam
         image: postgres:11-alpine
         restart: always
+        env_file: 
+          - container_variables.env
         environment: 
-          - POSTGRES_USER=softdbd_user
-          - POSTGRES_PASSWORD=softdbd_pass
-          - POSTGRES_DB=softdbd_db
           - POSTGRES_CONTAINER_NAME=pg_dbd
+          # Overloaded over environment file.
           - POSTGRES_PORT=31295
           - PGDATA=/var/lib/postgres/data
         ports: 
@@ -75,27 +75,14 @@ services:
         build:
             context: ./data_population
             dockerfile: dockerfile
+        env_file:
+          - container_variables.env
         depends_on: 
             - pg_dbd_exam
             - redis-commander
             - redis_dbd_exam
             - search_engine
             - mongo_basic_info_storage
-        environment:
-          - PRODUCTION_VARIABLES=1
-          - POSTGRES_HOST=pg_dbd_exam
-          - POSTGRES_USER=softdbd_user
-          - POSTGRES_PASSWORD=softdbd_pass
-          - POSTGRES_DB=softdbd_db
-          - POSTGRES_PORT=5432
-          - MONGO_INITDB_ROOT_USERNAME=softdbd_user
-          - MONGO_INITDB_ROOT_PASSWORD=softdbd_pass
-          - MONGO_PORT=27017
-          - MONGO_HOST=mongo_basic_info_storage
-          - MONGO_INITDB_DATABASE=softdbd_db
-          - MEILI_HOST=search_engine
-          - MEILI_PORT=7700
-          - MEILI_MASTER_KEY=jaedenar_nutcracker
         volumes:
             - ./resources:/usr/src/resources
 
@@ -107,23 +94,8 @@ services:
         build:
             context: ./backend
             dockerfile: dockerfile
-        environment:
-          - PRODUCTION_VARIABLES=1
-          - POSTGRES_HOST=pg_dbd_exam
-          - POSTGRES_USER=softdbd_user
-          - POSTGRES_PASSWORD=softdbd_pass
-          - POSTGRES_DB=softdbd_db
-          - POSTGRES_PORT=5432
-          - MONGO_INITDB_ROOT_USERNAME=softdbd_user
-          - MONGO_INITDB_ROOT_PASSWORD=softdbd_pass
-          - MONGO_PORT=27017
-          - MONGO_HOST=mongo_basic_info_storage
-          - MONGO_INITDB_DATABASE=softdbd_db
-          - MEILI_HOST=search_engine
-          - MEILI_PORT=7700
-          - MEILI_MASTER_KEY=jaedenar_nutcracker
-          - REDIS_HOST=redis_dbd_exam
-          - REDIS_PORT=6379
+        env_file: 
+          - container_variables.env
         ports:
           - 31291:3030
         volumes:
