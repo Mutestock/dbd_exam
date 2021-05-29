@@ -1,3 +1,5 @@
+#![allow(dead_code)]
+
 use crate::utils::environment::load_variables;
 use redis::{self, AsyncCommands, Commands};
 use std::env;
@@ -18,39 +20,33 @@ lazy_static! {
     };
 }
 
-#[allow(dead_code)]
 pub async fn make_async_redis_connection() -> redis::RedisResult<redis::aio::Connection> {
     let client = redis::Client::open(REDIS_CONNECTION_STRING.to_string())?;
     let conn = client.get_async_connection().await?;
     Ok(conn)
 }
 
-#[allow(dead_code)]
 pub fn make_redis_connection() -> redis::RedisResult<redis::Connection> {
     let client = redis::Client::open(REDIS_CONNECTION_STRING.to_string())?;
     let conn = client.get_connection()?;
     Ok(conn)
 }
 
-#[allow(dead_code)]
 pub fn health_check() -> redis::RedisResult<()> {
     let _: () = make_redis_connection()?.set("health", "ok")?;
     Ok(())
 }
 
-#[allow(dead_code)]
 pub fn get_health_check() -> redis::RedisResult<String> {
     let health_check = make_redis_connection()?.get("health")?;
     Ok(health_check)
 }
 
-#[allow(dead_code)]
 pub async fn get_async_health_check() -> redis::RedisResult<String> {
     let health_check = make_async_redis_connection().await?.get("health").await?;
     Ok(health_check)
 }
 
-#[allow(dead_code)]
 pub async fn async_health_check() -> redis::RedisResult<()> {
     make_async_redis_connection()
         .await?

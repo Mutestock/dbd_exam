@@ -6,6 +6,7 @@ extern crate diesel;
 #[macro_use]
 extern crate lazy_static;
 
+mod error;
 mod data_access;
 mod entities;
 mod logic;
@@ -66,6 +67,7 @@ async fn main() {
     let router = location_routes
         .or(person_routes)
         .or(university_routes)
+        .recover(error::handle_rejection)
         .with(log)
         .with(cors);
 

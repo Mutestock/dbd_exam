@@ -5,6 +5,7 @@ use crate::entities::pg_entities::location::{
     CachedLocation, CachedLocationsList, Location, NewLocation,
 };
 use crate::entities::shared_behaviour::CacheAble;
+use crate::error::Error;
 use crate::logic::caching;
 
 pub async fn list() -> Result<impl warp::Reply, warp::Rejection> {
@@ -45,8 +46,7 @@ pub async fn get(id: i32) -> Result<impl warp::Reply, warp::Rejection> {
                 }
                 Err(e) => {
                     println!("{:#?}", e);
-                    // Custom error recommended
-                    return Err(warp::reject::not_found());
+                    return Err(warp::reject::custom(Error::NoDataFromQueryError));
                 }
             }
         }
@@ -63,9 +63,8 @@ pub async fn create(new_location: NewLocation) -> Result<impl warp::Reply, warp:
             println!("{:#?}", &new_location);
         }
         Err(e) => {
-            println!("{:#?}", &e);
-            // Custom error recommended
-            return Err(warp::reject::not_found());
+            println!("{:#?}", e);
+            return Err(warp::reject::custom(Error::EntryCreationError));
         }
     };
     Ok(warp::reply::json(&reply))
@@ -88,8 +87,7 @@ pub async fn update(
         }
         Err(e) => {
             println!("{:#?}", e);
-            // Custom error recommended
-            return Err(warp::reject::not_found());
+            return Err(warp::reject::custom(Error::EntryUpdateError));
         }
     };
     Ok(warp::reply::json(&reply))
@@ -109,8 +107,7 @@ pub async fn delete(id: i32) -> Result<impl warp::Reply, warp::Rejection> {
         }
         Err(e) => {
             println!("{:#?}", e);
-            // Custom error recommended
-            return Err(warp::reject::not_found());
+            return Err(warp::reject::custom(Error::EntryDeletionError));
         }
     };
     Ok(warp::reply::json(&reply))

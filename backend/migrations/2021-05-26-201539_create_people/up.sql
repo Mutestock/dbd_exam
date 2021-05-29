@@ -1,6 +1,6 @@
 -- Your SQL goes here
 
--- This table will be created with SQLAlchemy in data_processing as well.
+-- This table will be created in data_processing as well.
 
 CREATE TABLE IF NOT EXISTS people (
     id SERIAL PRIMARY KEY NOT NULL,

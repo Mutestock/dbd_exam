@@ -58,8 +58,6 @@ mod tests {
             tokio_test::block_on($e)
         };
     }
-
-    #[allow(dead_code)]
     #[test]
     fn test_make_mongo_pool() {
         // Can't unwrap on failure
