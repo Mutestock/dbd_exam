@@ -3,6 +3,7 @@ use diesel::QueryDsl;
 use diesel::RunQueryDsl;
 use serde_derive::{Deserialize, Serialize};
 
+use crate::entities::shared_behaviour::CacheAble;
 use crate::schema::universities;
 use crate::schema::universities::dsl;
 use crate::schema::universities::dsl::*;
@@ -38,18 +39,8 @@ pub struct UniversitiesList(pub Vec<University>);
 #[derive(Serialize, Deserialize, Debug)]
 pub struct CachedUniversitiesList(pub Vec<CachedUniversity>);
 
-impl CachedUniversity {
-    pub fn deserialize(cache_string: &str) -> Self {
-        let res: Self = serde_json::from_str(cache_string)
-            .expect("Could not deserialize string into CashedUniversity");
-        res
-    }
-
-    pub fn serialize(&self) -> String {
-        serde_json::to_string(self).expect("Could not serialize CachedUniversity")
-    }
-
-    pub fn from_university(university: University) -> Self {
+impl CacheAble<University> for CachedUniversity {
+    fn from_base(university: University) -> Self {
         Self {
             university_name: university.university_name,
             country_index: university.country_index,
@@ -70,7 +61,7 @@ impl University {
         university_id: &i32,
         connection: &PgConnection,
     ) -> Result<CachedUniversity, diesel::result::Error> {
-        Ok(CachedUniversity::from_university(
+        Ok(CachedUniversity::from_base(
             Self::find_non_cached_university(university_id, connection)?,
         ))
     }
@@ -117,7 +108,7 @@ impl CachedUniversitiesList {
     pub fn list(connection: &PgConnection) -> Self {
         let mut cached_universities = vec![];
         for university in UniversitiesList::list(connection).0 {
-            let stuff = CachedUniversity::from_university(university.clone());
+            let stuff = CachedUniversity::from_base(university.clone());
             cached_universities.push(stuff);
         }
         Self(cached_universities)

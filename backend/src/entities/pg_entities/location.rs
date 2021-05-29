@@ -3,6 +3,7 @@ use diesel::QueryDsl;
 use diesel::RunQueryDsl;
 use serde_derive::{Deserialize, Serialize};
 
+use crate::entities::shared_behaviour::CacheAble;
 use crate::schema::locations;
 use crate::schema::locations::dsl;
 use crate::schema::locations::dsl::*;
@@ -31,18 +32,8 @@ pub struct CachedLocation {
     country: String,
 }
 
-impl CachedLocation {
-    pub fn deserialize(cache_string: &str) -> Self {
-        let res: Self = serde_json::from_str(cache_string)
-            .expect("Could not deserialize string into CashedLocation");
-        res
-    }
-
-    pub fn serialize(&self) -> String {
-        serde_json::to_string(self).expect("Could not serialize CachedLocation")
-    }
-
-    pub fn from_location(location: Location) -> Self {
+impl CacheAble<Location> for CachedLocation {
+    fn from_base(location: Location) -> Self {
         Self {
             street_name: location.street_name,
             zipcode: location.zipcode,
@@ -69,7 +60,7 @@ impl Location {
         location_id: &i32,
         connection: &PgConnection,
     ) -> Result<CachedLocation, diesel::result::Error> {
-        Ok(CachedLocation::from_location(
+        Ok(CachedLocation::from_base(
             Self::find_non_cached_location(location_id, connection)?,
         ))
     }
@@ -116,7 +107,7 @@ impl CachedLocationsList {
     pub fn list(connection: &PgConnection) -> Self {
         let mut cached_locations = vec![];
         for location in LocationsList::list(connection).0 {
-            let stuff = CachedLocation::from_location(location.clone());
+            let stuff = CachedLocation::from_base(location.clone());
             cached_locations.push(stuff);
         }
         Self(cached_locations)

@@ -4,6 +4,7 @@ use diesel::RunQueryDsl;
 use serde_derive::{Deserialize, Serialize};
 use std::time::SystemTime;
 
+use crate::entities::shared_behaviour::CacheAble;
 use crate::schema::people;
 use crate::schema::people::dsl;
 use crate::schema::people::dsl::*;
@@ -50,18 +51,8 @@ pub struct PeopleList(pub Vec<Person>);
 #[derive(Serialize, Deserialize, Debug)]
 pub struct CachedPeopleList(pub Vec<CachedPerson>);
 
-impl CachedPerson {
-    pub fn deserialize(cache_string: &str) -> Self {
-        let res: Self = serde_json::from_str(cache_string)
-            .expect("Could not deserialize string into CashedPerson");
-        res
-    }
-
-    pub fn serialize(&self) -> String {
-        serde_json::to_string(self).expect("Could not serialize CachedPerson")
-    }
-
-    pub fn from_person(person: Person) -> Self {
+impl CacheAble<Person> for CachedPerson {
+    fn from_base(person: Person) -> Self {
         Self {
             first_name: person.first_name,
             last_name: person.last_name,
@@ -84,7 +75,7 @@ impl Person {
         person_id: &i32,
         connection: &PgConnection,
     ) -> Result<CachedPerson, diesel::result::Error> {
-        Ok(CachedPerson::from_person(Self::find_non_cached_person(
+        Ok(CachedPerson::from_base(Self::find_non_cached_person(
             person_id, connection,
         )?))
     }
@@ -128,7 +119,7 @@ impl CachedPeopleList {
     pub fn list(connection: &PgConnection) -> Self {
         let mut cached_people = vec![];
         for person in PeopleList::list(connection).0 {
-            let stuff = CachedPerson::from_person(person.clone());
+            let stuff = CachedPerson::from_base(person.clone());
             cached_people.push(stuff);
         }
         Self(cached_people)

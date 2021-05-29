@@ -4,6 +4,7 @@ use crate::data_access::pg_connection::POOL;
 use crate::entities::pg_entities::location::{
     CachedLocation, Location, CachedLocationsList, NewLocation,
 };
+use crate::entities::shared_behaviour::CacheAble;
 use crate::logic::caching;
 
 pub async fn list() -> Result<impl warp::Reply, warp::Rejection> {

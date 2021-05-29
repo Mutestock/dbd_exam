@@ -3,6 +3,7 @@ use crate::entities::pg_entities::university::{
     CachedUniversitiesList, CachedUniversity, NewUniversity, University,
 };
 use crate::logic::caching;
+use crate::entities::shared_behaviour::CacheAble;
 use warp;
 
 pub async fn list() -> Result<impl warp::Reply, warp::Rejection> {
