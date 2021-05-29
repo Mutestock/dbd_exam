@@ -1,4 +1,4 @@
-import cli
+
 from logic import mongo_populate
 from logic import meili_populate
 from logic import pg_populate
@@ -13,7 +13,7 @@ if __name__ == "__main__":
         """
           Some of these processes will take some time.
           Much of the data is randomly generated.
-          Expect like 5~ minutes total.
+          Expect like 3~ minutes total.
         """
     )
     time_start = time()

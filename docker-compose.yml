@@ -122,6 +122,8 @@ services:
           - MEILI_HOST=search_engine
           - MEILI_PORT=7700
           - MEILI_MASTER_KEY=jaedenar_nutcracker
+          - REDIS_HOST=redis_dbd_exam
+          - REDIS_PORT=6379
         ports:
           - 31291:3030
         volumes:

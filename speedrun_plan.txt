@@ -29,12 +29,12 @@ Days:
     Entire Rust Diesel ORM setup(Done)
     All PG CRUD routes implemented with Warp(Done)
     Stable docker-compose(Done)
-    Basic routes with Meili
-    Basic routes with Mongo
+    Basic routes with Meili(Necessary?)
+    Basic routes with Mongo(Come back to this one. Not too sure what to put in)
 
 27/05/21
-    Basic routes with Redis
-    Redis caching system implemented
+    Basic routes with Redis(Done)
+    Redis caching system implemented(Done)
 
 28/05/21
     Frontend basic calls to backend with Axios
