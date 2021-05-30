@@ -21,14 +21,14 @@ It's due to time constraints. I need to use wait-for-it.sh files or similar solu
 That takes too long time to set up. \
  \
 Containers: \
-localhost:31290 - Frontend \
-localhost:31291 - Backend \
-localhost:31292 - Data processing(shuts down after use) \
-localhost:31293 - Mongodb \
-localhost:31294 - Meilisearch \
-localhost:31295 - Postgres \
-localhost:31296 - Redis \
-localhost:31297 - Redis-commander 
+localhost:11290 - Frontend \
+localhost:11291 - Backend \
+localhost:11292 - Data processing(shuts down after use) \
+localhost:11293 - Mongodb \
+localhost:11294 - Meilisearch \
+localhost:11295 - Postgres \
+localhost:11296 - Redis \
+localhost:11297 - Redis-commander 
 
 
 ### Running locally without containers:

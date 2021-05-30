@@ -64,7 +64,7 @@ export default {
   data() {
     return {
       searchClient: instantMeiliSearch(
-        "http://localhost:31294",
+        "http://localhost:11294",
         "jaedenar_nutcracker"
       ),
     };

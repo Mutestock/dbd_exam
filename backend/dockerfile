@@ -10,5 +10,5 @@ WORKDIR /usr/src/backend
 COPY . .
 
 RUN cargo install --path .
-EXPOSE 31291
+EXPOSE 11291
 CMD ["backend"]
