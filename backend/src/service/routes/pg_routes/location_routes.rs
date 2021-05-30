@@ -49,3 +49,11 @@ pub fn delete() -> BoxedFilter<(i32,)> {
         .and(warp::path::param::<i32>())
         .boxed()
 }
+
+pub fn search() -> BoxedFilter<(String, )>{
+    warp::get()
+        .and(path_prefix())
+        .and(warp::path("search"))
+        .and(warp::path::param::<String>())
+        .boxed()
+}

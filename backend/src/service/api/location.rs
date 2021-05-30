@@ -39,3 +39,11 @@ macro_rules! delete_location {
             .and_then(location_handler::delete)
     };
 }
+
+#[macro_export]
+macro_rules! search_location {
+    () => {
+        location_routes::search()
+            .and_then(location_handler::search)
+    };
+}

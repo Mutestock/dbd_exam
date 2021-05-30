@@ -1,12 +1,16 @@
 use diesel::PgConnection;
 use diesel::QueryDsl;
 use diesel::RunQueryDsl;
+use meilisearch_sdk::document::Document;
+use meilisearch_sdk::search::Query;
+use meilisearch_sdk::search::SearchResults;
 use serde_derive::{Deserialize, Serialize};
 
 use crate::entities::shared_behaviour::CacheAble;
 use crate::schema::locations;
 use crate::schema::locations::dsl;
 use crate::schema::locations::dsl::*;
+use meilisearch_sdk::client::*;
 
 #[derive(Identifiable, Queryable, Serialize, Deserialize, Debug, PartialEq, Clone)]
 #[table_name = "locations"]
@@ -30,6 +34,36 @@ pub struct CachedLocation {
     street_name: String,
     zipcode: String,
     country: String,
+}
+
+#[derive(Serialize, Deserialize, Debug)]
+pub struct SearchLocation {
+    location_id: String,
+    street_name: String,
+    zipcode: String,
+    country: String,
+}
+impl Document for SearchLocation {
+    type UIDType = String;
+    fn get_uid(&self) -> &Self::UIDType {
+        &self.location_id
+    }
+}
+
+impl SearchLocation {
+    pub async fn search(
+        search_str: String,
+        connection: &Client<'_>,
+    ) -> Result<SearchResults<Self>, meilisearch_sdk::errors::Error> {
+        let locations_index = connection
+            .get_or_create("locations")
+            .await
+            .expect("Could not get or create locations index");
+
+        let query: Query = Query::new(&locations_index).with_query(&search_str).build();
+
+        locations_index.execute_query(&query).await
+    }
 }
 
 impl CacheAble<Location> for CachedLocation {
@@ -60,9 +94,10 @@ impl Location {
         location_id: &i32,
         connection: &PgConnection,
     ) -> Result<CachedLocation, diesel::result::Error> {
-        Ok(CachedLocation::from_base(
-            Self::find_non_cached_location(location_id, connection)?,
-        ))
+        Ok(CachedLocation::from_base(Self::find_non_cached_location(
+            location_id,
+            connection,
+        )?))
     }
 
     pub fn delete(

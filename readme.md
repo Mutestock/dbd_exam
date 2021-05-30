@@ -1,10 +1,5 @@
 ### Running:
 
-Use these commands (In this order):
-> docker-compose -f docker-compose.db.yml up \
-> docker-compose -f docker-compose.data-processing.yml up \
-> docker-compose -f docker-compose.main.yml up
-
 Run this command:
 
 > docker-compose up --build
@@ -50,6 +45,8 @@ Functional postgres setup on the machine. \
 Python 3.9 \
 C Compiler for Cython (Like gcc). \
 Rust 1.52.1
+
+... And you'd also need all of the databases set up.
 
 #### Optional
 

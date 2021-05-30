@@ -50,7 +50,8 @@ async fn main() {
         .or(get_location!())
         .or(create_location!())
         .or(update_location!())
-        .or(delete_location!());
+        .or(delete_location!())
+        .or(search_location!());
 
     let person_routes = list_people!()
         .or(get_person!())
@@ -75,5 +76,4 @@ async fn main() {
     println!("{}", RESOURCES_DIR.display());
     println!("Backend: Starting Warp backend...");
     warp::serve(router).run(([0, 0, 0, 0], 3030)).await;
-    println!("Backend: Exiting Warp backend")
 }

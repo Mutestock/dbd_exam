@@ -26,6 +26,7 @@ pub struct NewUniversity {
     website_url: String,
     locations_id: Option<i32>,
 }
+
 #[derive(Serialize, Deserialize, Debug)]
 pub struct CachedUniversity {
     university_name: String,

@@ -74,7 +74,6 @@ cpdef populate_meili_locations():
     
     _index_resetter(meili_pool, id_name, index_name)
     _populater(meili_pool, chunk_size, index_name, all_locations_formatted)
-    # meili_pool.index(index_name).add_documents([all_locations[0]])
     print(f"{datetime.now().time()} - Done in {time() - time_start} seconds")
 
 
@@ -83,7 +82,6 @@ cpdef _formatter(content):
     return [{k:v for k,v in entry.items() if k!= "_id"} for entry in content]
 
 cpdef _index_resetter(meili_pool, str id_name, str index_name):
-    print("Cooldown 5 secs")
     try:
         print(f"{datetime.now().time()} - Meilisearch: Create index {index_name}...")
         meili_pool.create_index(index_name, {
@@ -111,8 +109,6 @@ cpdef _populater(meili_pool, int chunk_size, str index_name, content):
 
     for i in range(0, indexer):
         updated_range = i*chunk_size
-        # v The database actually gets overloaded without this 
-        #sleep(0.3)
         if updated_range % 5000 == 0:
             print(f"{datetime.now().time()} - Meilisearch: {updated_range} / {len(content)} completed ...")        
         list_thing = []

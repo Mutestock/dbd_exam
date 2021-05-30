@@ -1,5 +1,5 @@
-use std::time::Duration;
 use std::env;
+use std::time::Duration;
 
 use crate::data_access::redis_connection::make_async_redis_connection;
 use redis::{AsyncCommands, RedisError};
@@ -10,13 +10,18 @@ pub const CACHE_UNIVERSITY_FORMAT: &str = "cached_university_";
 
 lazy_static! {
     static ref CACHE_FLUSH_INTERVAL_MILLIS: u64 = {
-        env::var("CACHE_FLUSH_INTERVAL_MILLIS")
-            .expect("Could not retrieve CACHE_FLUSH_INTERVAL_MILLIS from .env file")
-            .parse::<u64>()
-            .expect("Could not cast CACHE_FLUSH_INTERVAL_MILLIS to u64")
+        match env::var("CACHE_FLUSH_INTERVAL_MILLIS") {
+            Ok(v) => match v.parse::<u64>() {
+                Ok(z) => z,
+                Err(e) => panic!("Could not cast CACHE_FLUSH_INTERVAL_MILLIS to u64: {}", e),
+            },
+            Err(e) => panic!(
+                "Could not retrieve CACHE_FLUSH_INTERVAL_MILLIS from .env file: {}",
+                e
+            ),
+        }
     };
 }
-
 
 pub async fn check(key: &str) -> redis::RedisResult<String> {
     let mut conn = make_async_redis_connection()
@@ -31,9 +36,6 @@ pub async fn set(key: &str, value: &str) -> Result<(), RedisError> {
         .await
         .expect("Could not create an async redis connection");
 
-    //conn.set(key, value)
-    //    .await
-    //    .expect(&format!("Could not set {} to {}", key, value));
     conn.set(key, value).await?;
     Ok(())
 }
