@@ -22,7 +22,7 @@
 \usepackage{biblatex}
 \addbibresource{containerized.bib}
 
-\graphicspath{ {images/} }
+\graphicspath{ {./programming_symbols/} }
 
 \usepackage{listings}
 \usepackage{xcolor}
@@ -66,7 +66,7 @@
 
 
 \begin{document}
-\title{\Large{\textbf{Containerization As A Tool For Learning}}}
+\title{\Large{\textbf{DBD exam report}}}
 \author{Henning W.}
 \date{\today}
 \maketitle
@@ -93,13 +93,41 @@ The other option is to use mongo inside the Rust container, but only have to cre
 \subsection{Databases}
 
 \subsubsection{PostgreSQL}
+\includegraphics[scale=0.2]{postgres_symbol}
+
+PostgreSQL is this project's primary database. It's an RDBMS. It gets populated inside the data-population container. Due to the scope of this project, the PostgreSQL currently only contains three tables. 
+
+Like MongoDB and Meilisearch, this database contains a total of 112,923 entries
+
 \subsubsection{MongoDB}
+\includegraphics[scale=0.15]{mongo_symbol}
+
+MongoDB is currently only used inside data-population. Information is extracted via. the Python pandas library and translated into a format suited for MongoDB. This information which is stored inside MongoDB is then extracted and used to populate both Meilisearch and PostgreSQL.
+
+MongoDB was also intended to hold the changelog, but it has not been implemented in the current version of the program.
+
 \subsubsection{Redis}
+\includegraphics[scale=0.2]{redis_symbol}
+
+Redis is a NoSQL key-value database. It's used as a cache for the primary database, since calls to the postgreSQL database are expensive. It's an in-memory database, and is therefore not used for any tasks, where persistence is of great importance. At this point, the cache is cleared every 5 minutes for demonstration purposes. This can be changed in the container\_values.env file.
+
 \subsubsection{Meilisearch}
+\includegraphics[scale=0.15]{meilisearch_symbol}
+
+Meilisearch is a NoSQL search engine database. It has support for both Rust(backend) and Vue(frontend). There's also some quick setup functionalities for Digitalocean, which is a cloud infrastructure provider we've been using in the DAT education, which is the background most of the students have.   
 
 \subsection{Backend}
+\includegraphics[scale=0.04]{rust_symbol}
+
+I've chosen to use Rust as my backend for this project. I've allowed myself to do so, because this is a single-man project. I also wanted to split the Data-Population container from the backend. Rust is a strongly typed, memory safe and very strict language. I feel more comfortable with using Rust as my backend language, than any of the others I know. 
+
 \subsection{Data-Population}
+\includegraphics[scale=0.07]{python_symbol}
+
+
+
 \subsection{Frontend}
+\includegraphics[scale=0.2]{vue_symbol}
 
 \section{Structure}
 
