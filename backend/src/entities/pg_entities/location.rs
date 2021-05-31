@@ -38,13 +38,13 @@ pub struct CachedLocation {
 
 #[derive(Serialize, Deserialize, Debug)]
 pub struct SearchLocation {
-    location_id: String,
+    location_id: i32,
     street_name: String,
     zipcode: String,
     country: String,
 }
 impl Document for SearchLocation {
-    type UIDType = String;
+    type UIDType = i32;
     fn get_uid(&self) -> &Self::UIDType {
         &self.location_id
     }
@@ -52,7 +52,7 @@ impl Document for SearchLocation {
 
 impl SearchLocation {
     pub async fn search(
-        search_str: String,
+        search_str: &str,
         connection: &Client<'_>,
     ) -> Result<SearchResults<Self>, meilisearch_sdk::errors::Error> {
         let locations_index = connection
