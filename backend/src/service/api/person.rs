@@ -39,3 +39,12 @@ macro_rules! delete_person {
             .and_then(person_handler::delete)
     };
 }
+
+
+#[macro_export]
+macro_rules! search_person {
+    () => {
+        person_routes::search()
+            .and_then(person_handler::search)
+    };
+}

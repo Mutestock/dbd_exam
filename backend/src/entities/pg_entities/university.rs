@@ -1,6 +1,10 @@
 use diesel::PgConnection;
 use diesel::QueryDsl;
 use diesel::RunQueryDsl;
+use meilisearch_sdk::client::*;
+use meilisearch_sdk::document::Document;
+use meilisearch_sdk::search::Query;
+use meilisearch_sdk::search::SearchResults;
 use serde_derive::{Deserialize, Serialize};
 
 use crate::entities::shared_behaviour::CacheAble;
@@ -39,6 +43,37 @@ pub struct UniversitiesList(pub Vec<University>);
 
 #[derive(Serialize, Deserialize, Debug)]
 pub struct CachedUniversitiesList(pub Vec<CachedUniversity>);
+
+#[derive(Serialize, Deserialize, Debug)]
+pub struct SearchUniversity {
+    index: i32,
+    country_initials: String,
+    university_name: String,
+    website_url: String,
+}
+
+impl Document for SearchUniversity {
+    type UIDType = i32;
+    fn get_uid(&self) -> &Self::UIDType {
+        &self.index
+    }
+}
+
+impl SearchUniversity {
+    pub async fn search(
+        search_str: &str,
+        connection: &Client<'_>,
+    ) -> Result<SearchResults<Self>, meilisearch_sdk::errors::Error> {
+        let university_index = connection
+            .get_or_create("universities")
+            .await
+            .expect("Could not get or create universities index");
+
+        let query: Query = Query::new(&university_index).with_query(&search_str).build();
+
+        university_index.execute_query(&query).await
+    }
+}
 
 impl CacheAble<University> for CachedUniversity {
     fn from_base(university: University) -> Self {

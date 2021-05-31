@@ -39,3 +39,11 @@ macro_rules! delete_university {
             .and_then(university_handler::delete)
     };
 }
+
+#[macro_export]
+macro_rules! search_university {
+    () => {
+        university_routes::search()
+            .and_then(university_handler::search)
+    };
+}

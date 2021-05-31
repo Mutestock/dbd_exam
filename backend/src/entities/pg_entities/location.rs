@@ -4,13 +4,14 @@ use diesel::RunQueryDsl;
 use meilisearch_sdk::document::Document;
 use meilisearch_sdk::search::Query;
 use meilisearch_sdk::search::SearchResults;
+use meilisearch_sdk::client::*;
 use serde_derive::{Deserialize, Serialize};
 
 use crate::entities::shared_behaviour::CacheAble;
 use crate::schema::locations;
 use crate::schema::locations::dsl;
 use crate::schema::locations::dsl::*;
-use meilisearch_sdk::client::*;
+
 
 #[derive(Identifiable, Queryable, Serialize, Deserialize, Debug, PartialEq, Clone)]
 #[table_name = "locations"]
@@ -43,6 +44,7 @@ pub struct SearchLocation {
     zipcode: String,
     country: String,
 }
+
 impl Document for SearchLocation {
     type UIDType = i32;
     fn get_uid(&self) -> &Self::UIDType {

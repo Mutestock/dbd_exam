@@ -57,13 +57,15 @@ async fn main() {
         .or(get_person!())
         .or(create_person!())
         .or(update_person!())
-        .or(delete_person!());
+        .or(delete_person!())
+        .or(search_person!());
 
     let university_routes = list_universities!()
         .or(get_university!())
         .or(create_university!())
         .or(update_university!())
-        .or(delete_university!());
+        .or(delete_university!())
+        .or(search_university!());
 
     let router = location_routes
         .or(person_routes)

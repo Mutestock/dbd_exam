@@ -1,6 +1,10 @@
 use diesel::PgConnection;
 use diesel::QueryDsl;
 use diesel::RunQueryDsl;
+use meilisearch_sdk::document::Document;
+use meilisearch_sdk::search::Query;
+use meilisearch_sdk::search::SearchResults;
+use meilisearch_sdk::client::*;
 use serde_derive::{Deserialize, Serialize};
 use std::time::SystemTime;
 
@@ -50,6 +54,39 @@ pub struct PeopleList(pub Vec<Person>);
 
 #[derive(Serialize, Deserialize, Debug)]
 pub struct CachedPeopleList(pub Vec<CachedPerson>);
+
+#[derive(Serialize, Deserialize, Debug)]
+pub struct SearchPerson {
+    person_id: i32,
+    first_name: String,
+    last_name: String,
+    email: String,
+    phone_number: String,
+    avatar: String,
+}
+
+impl Document for SearchPerson {
+    type UIDType = i32;
+    fn get_uid(&self) -> &Self::UIDType {
+        &self.person_id
+    }
+}
+
+impl SearchPerson {
+    pub async fn search(
+        search_str: &str,
+        connection: &Client<'_>,
+    ) -> Result<SearchResults<Self>, meilisearch_sdk::errors::Error> {
+        let people_index = connection
+            .get_or_create("people")
+            .await
+            .expect("Could not get or create people index");
+
+        let query: Query = Query::new(&people_index).with_query(&search_str).build();
+
+        people_index.execute_query(&query).await
+    }
+}
 
 impl CacheAble<Person> for CachedPerson {
     fn from_base(person: Person) -> Self {
