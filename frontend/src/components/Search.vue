@@ -2,11 +2,10 @@
   <div>
     <header class="header">
       <h1 class="header-title">MeiliSearch + Vue InstantSearch</h1>
-      <p class="header-subtitle">Search in Steam video games 🎮</p>
+      <p class="header-subtitle">Search in poeple</p>
     </header>
     <p class="disclaimer">
-      This is not the official Steam dataset but only for demo purpose. Enjoy
-      searching with MeiliSearch!
+      This is the page intended for the meili search engine. It hasn't been implemented
     </p>
     <div class="container">
       <ais-instant-search
@@ -17,14 +16,14 @@
           <ais-clear-refinements>
             <span slot="resetLabel">Clear all filters</span>
           </ais-clear-refinements>
-          <h2>Genres</h2>
-          <ais-refinement-list attribute="first_name" />
           <h2>first_names</h2>
-          <ais-refinement-list attribute="last_name" />
+          <ais-refinement-list attribute="first_name" />
           <h2>last_names</h2>
-          <ais-refinement-list attribute="platforms" />
-          <h2>Misc</h2>
-          <ais-refinement-list attribute="misc" />
+          <ais-refinement-list attribute="last_name" />
+          <h2>email</h2>
+          <ais-refinement-list attribute="email" />
+          <h2>avatar</h2>
+          <ais-refinement-list attribute="avatar" />
         </div>
 
         <div class="search-panel__results">
@@ -39,8 +38,8 @@
                 <div class="hit-description">
                   <ais-snippet :hit="item" attribute="description" />
                 </div>
-                <div class="hit-info">price: {{ item.first_name }}</div>
-                <div class="hit-info">release date: {{ item.releaseDate }}</div>
+                <div class="hit-info">first_name: {{ item.first_name }}</div>
+                <div class="hit-info">last_name: {{ item.last_name }}</div>
               </div>
             </template>
           </ais-hits>

@@ -55,7 +55,7 @@ cpdef populate_meili_locations():
     cdef meili_pool = make_meili_pool()
     cdef mongo_collection = get_mongo_collection("locations")
     cdef str index_name = "locations"
-    cdef str id_name = "locations_id"
+    cdef str id_name = "location_id"
     cdef count_column_entries = mongo_collection.count_documents({})
     cdef all_locations
     cdef int chunk_size = 3000
