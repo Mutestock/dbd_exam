@@ -66,7 +66,7 @@
 
 
 \begin{document}
-\title{\Large{\textbf{DBD exam report}}}
+\title{\Large{\textbf{DBD Exam Report}}}
 \author{Henning W.}
 \date{\today}
 \maketitle
@@ -76,26 +76,36 @@
 \fancyhead{\leftmark}
 \fancyfoot{\thepage}
 
+\section{Target Audience}
+This report was not written to cater to all audiences. It is meant to be some sort of set of instructions, explanations and guidelines of the architecture of the program. It seldomly goes into detail about what the terminology means.  
+
 \section{Introduction}
-Choice of application: Some kind of social media platform thing. Due to large time constraints, some suboptimal solutions will have be taken. I usually would start off the project by making CI/CD with a server. These factors have been discarded entirely. This means, that there won't be any online capabilities in this project. Instead the entire application will be containerized, in an attempt at making the local solution easier to run. Another suboptimal solution is, that the database containers and the containers which utilize them have been split into two separate container files. You'd usually want both of them to share the same docker-compose file. The problem lies with migration strategies, and what I like calling "A chicken or egg" complication. Both data processing and my backend are reliant on the database. Further more, my backend is reliant on the data-processing. Because of this, the containers will need to be run in chunks. The standard solution to this is somewhat suboptimal in itself. It involves \href{https://github.com/vishnubob/wait-for-it}{files which lets other processes run first} before executing itself.
+This project involves a simulation of some of the features of a social media platform. Due to time constraints, many of the features I usually would be using in my setup, has been skipped entirely to meet the deadline. This includes serving the applications in the cloud, CI/CD, logging and proper documentation (Sphinx and Rustdoc in this project).
 
-Since the project requires a larger amount of data, the project has been created a bit backwards. I've looked at some datasets, and then slowly formulated data models from them.
+Since the assignment definition states a requirement for large amounts of data, the project has been created a bit backwards. I've looked at some datasets, and then formulated data models from them. This of course also has an effect on how meaningful the data is. The project is thoroughly tested throughout multiple machines, owned by multiple people with different operating systems. 
 
-I'm using a Rust backend, since it's a solo project, and I already have a setup for it. It's effective and stable. It's a role I don't trust Python all that much with.
+The project's repository can be found here: 
+\url{https://github.com/Mutestock/dbd\_exam}
 
-The Python container for data processing is only run once. It's purpose is to populate the databases with some dummy data. The data is acquired from several sources, and translated via. the Python library Pandas, and then subsequently formatted and populated into Mongo. From there, the data will once again be formatted and populated into Meilisearch.
-The reason why the Python container isn't populating the Postgres database as well, is because it'd mean, that both the Rust backend and the Python data processing container would have to have the complete ORM set up.
-I'd also need the two ORMs be completely alike.
-The other option is to use mongo inside the Rust container, but only have to create 1 ORM with Postgres setup. I chose the latter.
+\section{Installation}
+Open a terminal in the project's directory. Then:
+
+\begin{lstlisting}[language=Rust]
+docker-compose up
+\end{lstlisting}
+
+If you're reading the report before starting the program, then I suggest you clone the project and type in the command now. There are 8 containers which needs to be pulled, Rust has a slow compiler, and there's a container which populates a total of over 333,000 entries over 3 databases. The entire process will take about 10~ minutes total depending on your machine. 
+
+The project will occupy approximately 6gb of storage space total. 
+
+The process is completed when the data population container exits with code 0. Please refrain from stopping the process immaturely. 
 
 \section{Technologies}
-
 \subsection{Databases}
-
 \subsubsection{PostgreSQL}
 \includegraphics[scale=0.2]{postgres_symbol}
 
-PostgreSQL is this project's primary database. It's an RDBMS. It gets populated inside the data-population container. Due to the scope of this project, the PostgreSQL currently only contains three tables. 
+PostgreSQL is this project's primary database. It gets populated inside the data-population container. Due to the scope of this project, the PostgreSQL currently only contains three tables. 
 
 Like MongoDB and Meilisearch, this database contains a total of 112,923 entries
 
@@ -114,72 +124,110 @@ Redis is a NoSQL key-value database. It's used as a cache for the primary databa
 \subsubsection{Meilisearch}
 \includegraphics[scale=0.15]{meilisearch_symbol}
 
-Meilisearch is a NoSQL search engine database. It has support for both Rust(backend) and Vue(frontend). There's also some quick setup functionalities for Digitalocean, which is a cloud infrastructure provider we've been using in the DAT education, which is the background most of the students have.   
+Meilisearch is a NoSQL search engine database. It has support for both Rust(backend) and Vue(frontend). There's also some quick setup functionalities for Digitalocean, which is a cloud infrastructure provider we've been using in the DAT education, which is the background most of the students have. Meilisearch can be connected directly to the frontend with read-access, and doesn't explicitly require a backend post data population. 
 
 \subsection{Backend}
 \includegraphics[scale=0.04]{rust_symbol}
 
 I've chosen to use Rust as my backend for this project. I've allowed myself to do so, because this is a single-man project. I also wanted to split the Data-Population container from the backend. Rust is a strongly typed, memory safe and very strict language. I feel more comfortable with using Rust as my backend language, than any of the others I know. 
 
+The backend uses the Diesel ORM framework, the Tokio asynchronous runtime and which compliments the usage of Warp, which is the web server framework I am using for this project, which is also running asynchronously. All the database connectors are also running asynchronously.
+
 \subsection{Data-Population}
-\includegraphics[scale=0.07]{python_symbol}
+\includegraphics[scale=0.07]{cython_symbol}
 
+As the name states, Data-Population's task is to populate the databases with information. It takes various csv datasets, and translates them into formats which can be used in the project's databases. It also has functionalities which randomly generates some other data for my database structures. This largely unstructured data is stored within the MongoDB container, which is an intermediate storage for the data, which is going to populate PostgreSQL and Meilisearch with rougly the same format. 
 
+Data-Population is written primarily in Cython. I chose to use Python and Cython for this part of the project, because the assignment definition stated, that a large amount of data was necessary. I decided, that one of the easiest ways to gather large amounts of data, was using csv datasets - Something which Python has some excellent libraries for handling. Python is not a speedy language execution-wise, however, so I decided to use Cython for computation heavy tasks(which is most of the program). Cython is a static compiler for optimization. It has its own language as an extension of Python. It compiles the code into extensions written in C, hence the name Cython.
 
 \subsection{Frontend}
-\includegraphics[scale=0.2]{vue_symbol}
+\includegraphics[scale=0.17]{vue_symbol}
 
-\section{Structure}
-
+Vue has been chosen as the frontend for this project, partially because I have some experience with it, and partially because Meilisearch has bindings for it. The frontend part of the project has been scrapped, though, so it should be seen as an indicator on how the setup is supposed to work. 
 
 \section{Goals}
-This section is dedicated to the following assignment definition question:
+This section is dedicated to questions which are defined in the definition of the assignment:
 
-Define functional and non-functional requirements to your project
-
-\subsection{Implemented}
+\subsection{Define functional and non-functional requirements}
 \begin{itemize}
-	\item
+	\item The program should use caching.
+	\item The program should use a relational database structure with multiple tables.
+	\item The program needs to use large amounts of data.
+	\item The program should have a login system.
+	\item The program should use a search engine.
+	\item The program should use logging.
+	\item The program should have a GUI.
+	\item The program should use extensive testing.
+	\item The program should use extensive documentation.
+	\item The program should give access to more than a few routes.
+	\item The program needs to use multiple database paradigms.
+	\item The program should have some kind of CI/CD, preferably github actions.
+	\item The program should be deployed on a server.
+	\item The program should use HTTPS and a reverse proxy via. Nginx on said server. 
+	\item The program should use docker-compose to solve the portability problem. I can't expect the user to install a C compiler for Cython and the Rust programming language.
+	\item The program should have a setup, which makes it easy to expand on. (Scalable)
+	\item The program should use configuration and environment files, to make it possible to easily change how the application functions.
+	\item The backend and the data-population functionality should be two independent containers.
+	\item The program should use a REST(like)-API to display the usage of the databases.
+	\item The program should use extensive error handling.
 \end{itemize}
 
-\subsection{Planned}
-\begin{itemize}
-	\item Gathering of datasets
-	\item Create diagrams for database
-	\item data\_population: Processing of datasets to usable format
-	\item data\_population: Datasets inserted into Mongo with Cython
-	\item data\_population: connection tests
-	\item data\_population: logging
-	\item backend: Postgres, Redis, Mongo connectors and tests
-	\item backend: Generate Postgres entries from Mongo database
-	\item backend: Redis caching
-	\item frontend: Basic site setup with routes
-	\item frontend: Meilisearch functionality implemented
-	\item frontend: Interaction with Redis routes.
-\end{itemize}
-
-\subsection{Stretch Goals}
-\begin{itemize}
-	\item data\_population: documentation with Sphinx
-	\item backend: Documentation rustdocs 
-	
-\end{itemize}
-
-\subsection{Scrapped}
+\subsection{Missing Features}
 \begin{itemize}
 	\item Apply solution to Digital Ocean droplet
 	\begin{itemize}
 		\item Create and setup server on digital ocean
-		\item docker-compose deployment version
 		\item CI with github actions.
 		\item github actions secrets with docker-compose
 		\item SSH SCP appleboy execution of docker-compose solution
-		\item nginx
+		\item Rustdoc and Sphinx documentation
+		\item More tests
+		\item Logging 
+		\item Nginx
+		\item Backend interactions with MongoDB
+		\item Log-in, passwords with Argon hashing, usernames, JWT tokens or sessions.
 	\end{itemize}
-
 \end{itemize}
 
-\section{Installation}
+\subsection{Plan and motivate your decisions}
+All the chosen databases must use their functionalities as they are intended. As such, PostgreSQL is the primary database. Redis is for caching and sessions. MongoDB is for large quantities of unstructured data. It will be used for data transformation, as well as a changelog. The search engine is... A search engine. I find it necessary to learn new technologies in all projects I make. Therefore I will introduce the search engine database paradigm, as well as the Cython programming language. 
+
+\subsection{Design and create the databases}
+All the databases are created by their individual containers in docker-compose. These containers are populated with the Cython/Python data-population container, which shuts down after it's finished. The backend has full access to all databases.
+
+\subsection{Deploy the databases}
+Once executed, the program is functional to the current computer(localhost). Deployment to an external cloud provider (In this case Digital Ocean), was a stretch goal which wasn't reached due to time constraints.
+
+\subsection{Create simple applications for demonstration}
+There's a backend, a frontend and a program which populates the databases, then shuts down immediately. User management is a goal which wasn't reached. The frontend's GUI was never populated with any meaningful functionality. The Redis-commander container is for displaying the contents of the Redis database. The Meilisearch container contains a minimal demonstration of how Meilisearch functions with the data used in this project. They can be found here (post installation):
+
+\begin{lstlisting}[language=Rust]
+localhost:11297 (Redis commander)
+localhost:11294 (Meilisearch)
+\end{lstlisting}
+
+These routes are accessible through the backend (post installation):
+
+\begin{lstlisting}[language=Rust]
+GET: localhost:11291/api/location (list of locations limit 10)
+POST: localhost:11291/api/location
+GET/UPDATE/DELETE: localhost:11291/api/location/{int_id}
+GET: localhost:11291/api/location/search/{Some string}
+
+GET: localhost:11291/api/person (list of people limit 10)
+POST: localhost:11291/api/person 
+GET/UPDATE/DELETE: localhost:11291/api/person/{int_id}
+GET: localhost:11291/api/person/search/{Some string}
+
+GET: localhost:11291/api/university (list of universities limit 10)
+POST: localhost:11291/api/university 
+GET/UPDATE/DELETE: localhost:11291/api/university/{int_id}
+GET: localhost:11291/api/university/search/{Some string}
+\end{lstlisting}
+\section{Structure}
+\includegraphics{database_model_dbeaver}
+\includegraphics[scale=0.55]{full_application_structure_cropped}
+\includegraphics{structure_model_2}
 
 
 \end{document}

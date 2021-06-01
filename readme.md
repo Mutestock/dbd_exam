@@ -4,10 +4,10 @@ Run this command:
 
 > docker-compose up --build
 
-The entire project's total size is 8~ gb. \
+The entire project's total size is 6~ gb. \
 It'll probably take 10 minutes total. Don't stop the process prematurely. \
 3~ minutes of those 10~ comes from the data-population container. \
-The entire process is done when you see this guy: ヽ༼ຈل͜ຈ༽ﾉ 
+The entire process is done when the data-population container exits with code 0.
 
  \
 Containers: \
@@ -18,7 +18,25 @@ localhost:11293 - Mongodb \
 localhost:11294 - Meilisearch \
 localhost:11295 - Postgres \
 localhost:11296 - Redis \
-localhost:11297 - Redis-commander 
+localhost:11297 - Redis-commander \
+ \
+
+### Available routes: \
+ \
+GET: localhost:11291/api/location (list of locations limit 10) \
+GET/POST/UPDATE/DELETE: localhost:11291/api/location/{some_integer_id} \
+GET: localhost:11291/api/location/search/{Some string} \
+ \
+GET: localhost:11291/api/person (list of people limit 10) \
+GET/POST/UPDATE/DELETE: localhost:11291/api/person/{some_integer_id} \
+GET: localhost:11291/api/person/search/{Some string} \
+ \
+GET: localhost:11291/api/university (list of universities limit 10) \
+GET/POST/UPDATE/DELETE: localhost:11291/api/university/{some_integer_id} \
+GET: localhost:11291/api/university/search/{Some string} \
+ 
+localhost:11297 is a Redis dashboard.
+localhost:11294 contains a minimal demonstration of how Meilisearch functions.
 
 
 ### Running locally without containers:
@@ -34,9 +52,12 @@ Functional postgres setup on the machine. \
             > sudo dnf install postgresql-devel \
 Python 3.9 \
 C Compiler for Cython (Like gcc). \
-Rust 1.52.1
-
-... And you'd also need all of the databases set up.
+Rust 1.52.1 \
+ 
+https://redis.io/download \
+https://docs.meilisearch.com/learn/getting_started/installation.html \
+https://www.postgresql.org/download/ \
+https://www.mongodb.com/try/download/community
 
 #### Optional
 
