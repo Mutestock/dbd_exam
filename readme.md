@@ -1,3 +1,8 @@
+### Description:
+
+This is the project is my answer for the DBD exam. It is a one-man project.\
+If you want to know more, I encourage the reader to look in ./documentation/latex/report.pdf
+
 ### Running:
 
 Run this command:

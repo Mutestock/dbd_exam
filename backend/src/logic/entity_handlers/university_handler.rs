@@ -121,7 +121,7 @@ pub async fn search(search_str: String) -> Result<impl warp::Reply, warp::Reject
         Ok(results) => results,
         Err(e) => {
             println!("{:#?}", e);
-            return Err(warp::reject::not_found());
+            return Err(warp::reject::custom(Error::SearchError));
         }
     };
     let res_str = format!("{:?}", reply);

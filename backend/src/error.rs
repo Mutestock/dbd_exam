@@ -40,6 +40,9 @@ pub enum Error {
 
     #[error("Entry could not be deleted from database")]
     EntryDeletionError,
+
+    #[error("An error occured while searching")]
+    SearchError,
 }
 
 #[derive(Serialize, Debug)]
